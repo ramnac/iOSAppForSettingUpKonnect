@@ -1,0 +1,87 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    sh("env")
+    setup_jenkins(
+      force:true
+    )
+    removeUnwantedFoldersAndItsContents
+  end
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    validate_params(
+      certsAndProfilesGitUsername:ENV["CERTS_AND_PROFILES_GIT_USERNAME"],
+      certsAndProfilesGitUrl:ENV["CERTS_AND_PROFILES_GIT_URL"],
+      matchPassword:ENV["MATCH_PASSWORD"]
+    )
+
+  	xcversion(version: "11.0")
+
+    checkCertsAndProfiles(
+      type:"appstore",
+      gitUrl:ENV["CERTS_AND_PROFILES_GIT_URL"],
+      teamId:CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+    )
+
+    current_version = get_info_plist_value(
+      path: "konnect/Info.plist",
+      key: "CFBundleShortVersionString"
+    )
+    UI.success("Current Version of the App : #{current_version}")
+
+    increment_build_number({
+      build_number: latest_testflight_build_number(version:current_version,initial_build_number: "0") + 1
+    })
+
+    gym
+    
+    upload_to_testflight
+  end
+
+  private_lane :validate_params do |options|
+    UI.user_error!("Please provide CERTS_AND_PROFILES_GIT_USERNAME") if options[:certsAndProfilesGitUsername].to_s.length == 0
+    UI.user_error!("Please provide CERTS_AND_PROFILES_GIT_URL") if options[:certsAndProfilesGitUrl].to_s.length == 0
+    UI.user_error!("Please provide MATCH_PASSWORD") if options[:matchPassword].to_s.length == 0
+  end
+
+  private_lane :checkCertsAndProfiles do |options|
+    match(
+      type: options[:type],
+      git_url: options[:gitUrl],
+      git_branch: options[:teamId],
+      verbose: false,
+      output_path: "fastlane/match"
+    )
+  end
+
+  private_lane :removeUnwantedFoldersAndItsContents do |options|
+    FileUtils.rm_rf("../derivedData")
+    FileUtils.rm_rf("../output")
+    FileUtils.rm_rf("./match")
+  end
+
+  after_all do
+    removeUnwantedFoldersAndItsContents
+  end
+
+  error do |lane, exception, options|
+    removeUnwantedFoldersAndItsContents
+  end
+end
