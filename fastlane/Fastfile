@@ -32,7 +32,7 @@ platform :ios do
       matchPassword:ENV["MATCH_PASSWORD"]
     )
 
-  	xcversion(version: "11.0")
+  	xcversion(version: "10.2.1")
 
     checkCertsAndProfiles(
       type:"appstore",
@@ -52,7 +52,10 @@ platform :ios do
 
     gym
     
-    upload_to_testflight
+    deliver(
+      price_tier: 0,
+      force: true
+    )
   end
 
   private_lane :validate_params do |options|
