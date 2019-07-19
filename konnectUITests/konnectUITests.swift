@@ -2,7 +2,7 @@
 //  konnectUITests.swift
 //  konnectUITests
 //
-//  Created by Ram on 19/07/19.
+//  Created by Ram on 20/07/19.
 //  Copyright © 2019 andersenev. All rights reserved.
 //
 
