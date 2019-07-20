@@ -15,8 +15,7 @@ enum BluetoothState {
 }
 
 protocol BluetoothDelegate: class {
-    func bluetoothOn()
-    func bluetoothOffOrUnknown()
+    func bluetoothPoweredOn()
 }
 
 class Bluetooth: NSObject {
@@ -39,10 +38,9 @@ extension Bluetooth: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             state = .on
-            delegate?.bluetoothOn()
+            delegate?.bluetoothPoweredOn()
         } else {
             state = .offOrUnknown
-            delegate?.bluetoothOffOrUnknown()
         }
     }
 }

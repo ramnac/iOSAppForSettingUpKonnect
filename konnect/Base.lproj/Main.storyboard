@@ -33,6 +33,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="Hy2-QE-EYa"/>
+                    <connections>
+                        <segue destination="bRm-ap-vmx" kind="show" identifier="peripheralListView" id="HSF-wp-1VA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -41,7 +44,7 @@
         <!--Table View Controller-->
         <scene sceneID="vjs-Rr-CdF">
             <objects>
-                <tableViewController storyboardIdentifier="peripheralListView" id="bRm-ap-vmx" sceneMemberID="viewController">
+                <tableViewController id="bRm-ap-vmx" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mjV-tu-7Z9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

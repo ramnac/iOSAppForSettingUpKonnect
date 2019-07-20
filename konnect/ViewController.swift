@@ -29,21 +29,21 @@ class ViewController: UIViewController, Alertable {
         bluetooth.delegate = self
         if let bluetoothState = bluetooth.state {
             if bluetoothState == .offOrUnknown {
-                bluetoothOffOrUnknown()
+                handleBluetoothOffState()
             } else {
-                bluetoothOn()
+                bluetoothPoweredOn()
             }
+        }
+    }
+    
+    func handleBluetoothOffState() {
+        self.showAlert(message: Constants.UserInterface.bluetoothOffOrUnknown.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { () -> (Void) in
         }
     }
 }
 
 extension ViewController: BluetoothDelegate {
-    func bluetoothOffOrUnknown() {
-        self.showAlert(message: Constants.UserInterface.bluetoothOffOrUnknown.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { () -> (Void) in
-        }
-    }
-    
-    func bluetoothOn() {
+    func bluetoothPoweredOn() {
         self.performSegue(withIdentifier: Constants.Storyboard.peripheralListView.rawValue, sender: nil)
     }
 }
