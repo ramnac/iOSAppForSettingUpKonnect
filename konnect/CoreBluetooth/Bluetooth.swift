@@ -14,11 +14,18 @@ enum BluetoothState {
     case offOrUnknown
 }
 
+protocol BluetoothDelegate: class {
+    func bluetoothOn()
+    func bluetoothOffOrUnknown()
+}
+
 class Bluetooth: NSObject {
     
     static let shared = Bluetooth()
     
-    private(set) var state: BluetoothState = .offOrUnknown
+    private(set) var state: BluetoothState?
+    
+    weak var delegate: BluetoothDelegate?
     
     private var coreBluetoothManager: CBCentralManager!
     
@@ -32,8 +39,10 @@ extension Bluetooth: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             state = .on
+            delegate?.bluetoothOn()
         } else {
             state = .offOrUnknown
+            delegate?.bluetoothOffOrUnknown()
         }
     }
 }

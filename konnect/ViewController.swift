@@ -25,13 +25,19 @@ class ViewController: UIViewController, Alertable {
     }
     
     @IBAction func scanBluetoothButtonTapped(_ sender: Any) {
-        if Bluetooth.shared.state == .offOrUnknown {
-            bluetoothOffOrUnknown()
-        } else {
-            bluetoothOn()
+        let bluetooth = Bluetooth.shared
+        bluetooth.delegate = self
+        if let bluetoothState = bluetooth.state {
+            if bluetoothState == .offOrUnknown {
+                bluetoothOffOrUnknown()
+            } else {
+                bluetoothOn()
+            }
         }
     }
-    
+}
+
+extension ViewController: BluetoothDelegate {
     func bluetoothOffOrUnknown() {
         self.showAlert(message: Constants.UserInterface.bluetoothOffOrUnknown.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { () -> (Void) in
         }
