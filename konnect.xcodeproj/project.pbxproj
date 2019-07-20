@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */; };
-		21CF861722E2C48700A2A9E7 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861622E2C48700A2A9E7 /* Alertable.swift */; };
+		21CF861722E2C48700A2A9E7 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861622E2C48700A2A9E7 /* AlertDelegate.swift */; };
 		21CF861922E2CB4600A2A9E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861822E2CB4600A2A9E7 /* Constants.swift */; };
+		21CF861B22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861A22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift */; };
+		21CF862222E3326000A2A9E7 /* PeripheralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF862122E3326000A2A9E7 /* PeripheralViewController.swift */; };
 		21DB856A22E202CF007EAFBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DB856922E202CF007EAFBD /* AppDelegate.swift */; };
 		21DB856C22E202CF007EAFBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DB856B22E202CF007EAFBD /* ViewController.swift */; };
 		21DB856F22E202CF007EAFBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21DB856D22E202CF007EAFBD /* Main.storyboard */; };
@@ -38,8 +40,10 @@
 
 /* Begin PBXFileReference section */
 		21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
-		21CF861622E2C48700A2A9E7 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
+		21CF861622E2C48700A2A9E7 /* AlertDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
 		21CF861822E2CB4600A2A9E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		21CF861A22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorDelegate.swift; sourceTree = "<group>"; };
+		21CF862122E3326000A2A9E7 /* PeripheralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralViewController.swift; sourceTree = "<group>"; };
 		21DB856622E202CF007EAFBD /* konnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = konnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21DB856922E202CF007EAFBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21DB856B22E202CF007EAFBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,21 +84,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		21CF860A22E2A76100A2A9E7 /* CoreBluetooth */ = {
+		21CF860A22E2A76100A2A9E7 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
 				21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */,
 			);
-			path = CoreBluetooth;
+			path = Bluetooth;
 			sourceTree = "<group>";
 		};
 		21CF861522E2C47400A2A9E7 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				21CF861622E2C48700A2A9E7 /* Alertable.swift */,
 				21CF861822E2CB4600A2A9E7 /* Constants.swift */,
+				21CF861622E2C48700A2A9E7 /* AlertDelegate.swift */,
+				21CF861A22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		21CF861C22E3291F00A2A9E7 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				21CF862122E3326000A2A9E7 /* PeripheralViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		21DB855D22E202CF007EAFBD = {
@@ -120,8 +133,9 @@
 		21DB856822E202CF007EAFBD /* konnect */ = {
 			isa = PBXGroup;
 			children = (
+				21CF861C22E3291F00A2A9E7 /* ViewControllers */,
 				21CF861522E2C47400A2A9E7 /* Utility */,
-				21CF860A22E2A76100A2A9E7 /* CoreBluetooth */,
+				21CF860A22E2A76100A2A9E7 /* Bluetooth */,
 				21DB856922E202CF007EAFBD /* AppDelegate.swift */,
 				21DB856B22E202CF007EAFBD /* ViewController.swift */,
 				21DB856D22E202CF007EAFBD /* Main.storyboard */,
@@ -282,9 +296,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				21CF861922E2CB4600A2A9E7 /* Constants.swift in Sources */,
+				21CF861B22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift in Sources */,
 				21DB856C22E202CF007EAFBD /* ViewController.swift in Sources */,
+				21CF862222E3326000A2A9E7 /* PeripheralViewController.swift in Sources */,
 				21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */,
-				21CF861722E2C48700A2A9E7 /* Alertable.swift in Sources */,
+				21CF861722E2C48700A2A9E7 /* AlertDelegate.swift in Sources */,
 				21DB856A22E202CF007EAFBD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,7 +487,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.andersenev.konnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.andersenev.konnect";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.andersenev.konnect";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -492,7 +508,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.andersenev.konnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.andersenev.konnect";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.andersenev.konnect";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

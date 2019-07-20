@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, Alertable {
+class ViewController: UIViewController, AlertDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class ViewController: UIViewController, Alertable {
             if bluetoothState == .offOrUnknown {
                 handleBluetoothOffState()
             } else {
-                bluetoothPoweredOn()
+                didBluetoothPoweredOn()
             }
         }
     }
@@ -43,8 +43,8 @@ class ViewController: UIViewController, Alertable {
 }
 
 extension ViewController: BluetoothDelegate {
-    func bluetoothPoweredOn() {
-        self.performSegue(withIdentifier: Constants.Storyboard.peripheralListView.rawValue, sender: nil)
+    func didBluetoothPoweredOn() {
+        self.performSegue(withIdentifier: Constants.Storyboard.peripheralViewController.rawValue, sender: nil)
     }
 }
 
