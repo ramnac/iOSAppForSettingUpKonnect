@@ -29,20 +29,28 @@ platform :ios do
     validate_params(
       certsAndProfilesGitUsername:ENV["CERTS_AND_PROFILES_GIT_USERNAME"],
       certsAndProfilesGitUrl:ENV["CERTS_AND_PROFILES_GIT_URL"],
-      matchPassword:ENV["MATCH_PASSWORD"]
+      matchPassword:ENV["MATCH_PASSWORD"],
+      xcodeAppInfoPlistPath:ENV["XCODE_APP_INFO_PLIST_PATH"],
+      xcodeAppVersionKey:ENV["XCODE_APP_VERSION_KEY"],
+      xcodeVersionNumber:ENV["XCODE_VERSION_NUMBER"],
+      xcodeScheme:ENV["XCODE_SCHEME"],
+      codeSigningIdentity:ENV["CODE_SIGNING_IDENTITY"],
+      profileType:ENV["PROFILE_TYPE"],
+      xcodeExportMethod:ENV["XCODE_EXPORT_METHOD"]
     )
 
-  	xcversion(version: "10.2.1")
+  	xcversion(version: ENV["XCODE_VERSION_NUMBER"])
 
     checkCertsAndProfiles(
-      type:"appstore",
+      type:ENV["PROFILE_TYPE"],
       gitUrl:ENV["CERTS_AND_PROFILES_GIT_URL"],
-      teamId:CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+      teamId:CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+      outputPath:"fastlane/match"
     )
 
     current_version = get_info_plist_value(
-      path: "konnect/Info.plist",
-      key: "CFBundleShortVersionString"
+      path: ENV["XCODE_APP_INFO_PLIST_PATH"],
+      key: ENV["XCODE_APP_VERSION_KEY"]
     )
     UI.success("Current Version of the App : #{current_version}")
 
@@ -50,7 +58,14 @@ platform :ios do
       build_number: latest_testflight_build_number(version:current_version,initial_build_number: "0") + 1
     })
 
-    gym
+    gym(
+      clean: true,
+      scheme: ENV["XCODE_SCHEME"],
+      include_symbols: true,
+      include_bitcode: true,
+      codesigning_identity: ENV["CODE_SIGNING_IDENTITY"],
+      export_method: ENV["XCODE_EXPORT_METHOD"]
+    )
     
     deliver(
       price_tier: 0,
@@ -62,6 +77,13 @@ platform :ios do
     UI.user_error!("Please provide CERTS_AND_PROFILES_GIT_USERNAME") if options[:certsAndProfilesGitUsername].to_s.length == 0
     UI.user_error!("Please provide CERTS_AND_PROFILES_GIT_URL") if options[:certsAndProfilesGitUrl].to_s.length == 0
     UI.user_error!("Please provide MATCH_PASSWORD") if options[:matchPassword].to_s.length == 0
+    UI.user_error!("Please provide a XCODE_APP_INFO_PLIST_PATH") if options[:xcodeAppInfoPlistPath].to_s.length == 0
+    UI.user_error!("Please provide a XCODE_APP_VERSION_KEY") if options[:xcodeAppVersionKey].to_s.length == 0
+    UI.user_error!("Please provide a XCODE_VERSION_NUMBER") if options[:xcodeVersionNumber].to_s.length == 0
+    UI.user_error!("Please provide a XCODE_SCHEME") if options[:xcodeScheme].to_s.length == 0
+    UI.user_error!("Please provide a CODE_SIGNING_IDENTITY") if options[:codeSigningIdentity].to_s.length == 0
+    UI.user_error!("Please provide a PROFILE_TYPE") if options[:profileType].to_s.length == 0
+    UI.user_error!("Please provide a XCODE_EXPORT_METHOD") if options[:xcodeExportMethod].to_s.length == 0
   end
 
   private_lane :checkCertsAndProfiles do |options|
@@ -70,7 +92,7 @@ platform :ios do
       git_url: options[:gitUrl],
       git_branch: options[:teamId],
       verbose: false,
-      output_path: "fastlane/match"
+      output_path: options[:outputPath]
     )
   end
 
