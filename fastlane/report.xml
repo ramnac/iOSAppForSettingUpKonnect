@@ -5,72 +5,67 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.007828">
+      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.010753">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: env" time="0.013937">
+      <testcase classname="fastlane.lanes" name="01: env" time="0.008954">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: setup_jenkins" time="0.005154">
+      <testcase classname="fastlane.lanes" name="02: setup_jenkins" time="0.006183">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="03: Switch to ios removeUnwantedFoldersAndItsContents lane" time="0.001223">
+      <testcase classname="fastlane.lanes" name="03: Switch to ios removeUnwantedFoldersAndItsContents lane" time="0.001975">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="04: Switch to ios validate_params lane" time="0.001139">
+      <testcase classname="fastlane.lanes" name="04: Switch to ios validate_params lane" time="0.001017">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="05: xcversion" time="1.915566">
+      <testcase classname="fastlane.lanes" name="05: xcversion" time="1.841108">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="06: Switch to ios checkCertsAndProfiles lane" time="0.001355">
+      <testcase classname="fastlane.lanes" name="06: Switch to ios checkCertsAndProfiles lane" time="0.001435">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="07: match" time="10.649555">
+      <testcase classname="fastlane.lanes" name="07: match" time="10.166126">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="08: get_info_plist_value" time="0.003733">
+      <testcase classname="fastlane.lanes" name="08: get_info_plist_value" time="0.003821">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="09: latest_testflight_build_number" time="3.603092">
+      <testcase classname="fastlane.lanes" name="09: latest_testflight_build_number" time="5.698632">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="10: increment_build_number" time="1.391613">
+      <testcase classname="fastlane.lanes" name="10: increment_build_number" time="0.84106">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="11: gym" time="32.591238">
+      <testcase classname="fastlane.lanes" name="11: gym" time="31.460784">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="12: deliver" time="1408.648734">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="13: Switch to ios removeUnwantedFoldersAndItsContents lane" time="0.001407">
+      <testcase classname="fastlane.lanes" name="12: Switch to ios removeUnwantedFoldersAndItsContents lane" time="0.001531">
         
       </testcase>
     

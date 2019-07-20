@@ -21,7 +21,7 @@
                                 <rect key="frame" x="112" y="433" width="190" height="30"/>
                                 <state key="normal" title="Scan For Bluetooth Devices"/>
                                 <connections>
-                                    <segue destination="bRm-ap-vmx" kind="show" id="st7-Yw-hpN"/>
+                                    <action selector="scanBluetoothButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VcI-2L-sOO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -41,7 +41,7 @@
         <!--Table View Controller-->
         <scene sceneID="vjs-Rr-CdF">
             <objects>
-                <tableViewController id="bRm-ap-vmx" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="peripheralListView" id="bRm-ap-vmx" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mjV-tu-7Z9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

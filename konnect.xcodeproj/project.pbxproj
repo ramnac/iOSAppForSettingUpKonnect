@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */; };
+		21CF861722E2C48700A2A9E7 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861622E2C48700A2A9E7 /* Alertable.swift */; };
+		21CF861922E2CB4600A2A9E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861822E2CB4600A2A9E7 /* Constants.swift */; };
 		21DB856A22E202CF007EAFBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DB856922E202CF007EAFBD /* AppDelegate.swift */; };
 		21DB856C22E202CF007EAFBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DB856B22E202CF007EAFBD /* ViewController.swift */; };
 		21DB856F22E202CF007EAFBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21DB856D22E202CF007EAFBD /* Main.storyboard */; };
@@ -34,6 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
+		21CF861622E2C48700A2A9E7 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
+		21CF861822E2CB4600A2A9E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		21DB856622E202CF007EAFBD /* konnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = konnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21DB856922E202CF007EAFBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21DB856B22E202CF007EAFBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +80,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21CF860A22E2A76100A2A9E7 /* CoreBluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */,
+			);
+			path = CoreBluetooth;
+			sourceTree = "<group>";
+		};
+		21CF861522E2C47400A2A9E7 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				21CF861622E2C48700A2A9E7 /* Alertable.swift */,
+				21CF861822E2CB4600A2A9E7 /* Constants.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		21DB855D22E202CF007EAFBD = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +120,8 @@
 		21DB856822E202CF007EAFBD /* konnect */ = {
 			isa = PBXGroup;
 			children = (
+				21CF861522E2C47400A2A9E7 /* Utility */,
+				21CF860A22E2A76100A2A9E7 /* CoreBluetooth */,
 				21DB856922E202CF007EAFBD /* AppDelegate.swift */,
 				21DB856B22E202CF007EAFBD /* ViewController.swift */,
 				21DB856D22E202CF007EAFBD /* Main.storyboard */,
@@ -256,7 +281,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21CF861922E2CB4600A2A9E7 /* Constants.swift in Sources */,
 				21DB856C22E202CF007EAFBD /* ViewController.swift in Sources */,
+				21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */,
+				21CF861722E2C48700A2A9E7 /* Alertable.swift in Sources */,
 				21DB856A22E202CF007EAFBD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -42,7 +42,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>$(PRODUCT_NAME) wants to access Bluetooth for finding the near by Konnect device</string>
+	<string>We use Bluetooth to discover, connect to, share information with nearby devices</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>
