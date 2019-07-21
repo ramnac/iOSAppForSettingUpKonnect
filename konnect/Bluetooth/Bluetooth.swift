@@ -21,12 +21,20 @@ protocol BluetoothDelegate: class {
     func didBluetoothPoweredOn()
     func didPeripheralUnreached()
     func didTimeoutOccured()
+    func didPeripheralDiscovered()
+    func didPeripheralConnected()
+    func didConnectToInvalidPeripheral()
+    func didBluetoothOffOrUnknown()
 }
 
 extension BluetoothDelegate {
     func didBluetoothPoweredOn() {}
     func didPeripheralUnreached() {}
     func didTimeoutOccured() {}
+    func didPeripheralDiscovered() {}
+    func didPeripheralConnected() {}
+    func didConnectToInvalidPeripheral() {}
+    func didBluetoothOffOrUnknown() {}
 }
 
 class Bluetooth: NSObject {
@@ -39,21 +47,41 @@ class Bluetooth: NSObject {
     
     private var coreBluetoothManager: CBCentralManager!
     
+    private var timeoutWorkItemReference: DispatchWorkItem?
+    
+    private var timeoutWorkItem: DispatchWorkItem {
+        get {
+            return DispatchWorkItem() {
+                [weak self] in
+                self?.coreBluetoothManager.stopScan()
+                self?.state = .on
+                self?.delegate?.didTimeoutOccured()
+            }
+        }
+    }
+    
     private override init() {
         super.init()
         coreBluetoothManager = CBCentralManager(delegate: self, queue: nil)
     }
     
     func scanForPeripherals() {
-        coreBluetoothManager.scanForPeripherals(withServices: [CBUUID(string: Constants.Bluetooth.serviceUUID.rawValue)], options: nil)
         state = .scanning
-        DispatchQueue.main.asyncAfter(deadline: .now()+3) { [weak self] in
-            if self?.state == .scanning {
-                self?.coreBluetoothManager.stopScan()
-                self?.state = .on
-                self?.delegate?.didTimeoutOccured()
-            }
+        restartTimeoutWorkItem()
+        coreBluetoothManager.scanForPeripherals(withServices: [CBUUID(string: Constants.Bluetooth.serviceUUID.rawValue)], options: nil)
+    }
+    
+    private func cancelTimeoutWorkItem() {
+        if let workItem = timeoutWorkItemReference {
+            workItem.cancel()
+            timeoutWorkItemReference = nil
         }
+    }
+    
+    private func restartTimeoutWorkItem() {
+        cancelTimeoutWorkItem()
+        timeoutWorkItemReference = timeoutWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(Constants.Bluetooth.Numbers.scanTimeoutSeconds.rawValue), execute: timeoutWorkItemReference!)
     }
 }
 
@@ -64,24 +92,32 @@ extension Bluetooth: CBCentralManagerDelegate {
             delegate?.didBluetoothPoweredOn()
         } else {
             state = .offOrUnknown
+            delegate?.didBluetoothOffOrUnknown()
         }
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         state = .peripheralDiscovered
         coreBluetoothManager.stopScan()
-        if RSSI.int32Value < -90 {
+        if RSSI.int32Value < Int32(Constants.Bluetooth.Numbers.rssiMinimumStrength.rawValue) {
+            cancelTimeoutWorkItem()
             delegate?.didPeripheralUnreached()
             return
         }
+        restartTimeoutWorkItem()
+        delegate?.didPeripheralDiscovered()
         coreBluetoothManager.connect(peripheral, options: nil)
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        state = .peripheralConnected
         guard let _ = peripheral.name else {
             coreBluetoothManager.cancelPeripheralConnection(peripheral)
+            state = .on
+            cancelTimeoutWorkItem()
+            delegate?.didConnectToInvalidPeripheral()
             return
         }
-        state = .peripheralConnected
+        delegate?.didPeripheralConnected()
     }
 }

@@ -21,7 +21,7 @@ class ViewController: UIViewController, AlertDelegate {
     }
     
     private func customiseUserInterface() {
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
     }
     
     @IBAction func scanBluetoothButtonTapped(_ sender: Any) {
@@ -29,22 +29,23 @@ class ViewController: UIViewController, AlertDelegate {
         bluetooth.delegate = self
         if let bluetoothState = bluetooth.state {
             if bluetoothState == .offOrUnknown {
-                handleBluetoothOffState()
+                didBluetoothOffOrUnknown()
             } else {
                 didBluetoothPoweredOn()
             }
-        }
-    }
-    
-    func handleBluetoothOffState() {
-        self.showAlert(message: Constants.UserInterface.bluetoothOffOrUnknown.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { () -> (Void) in
         }
     }
 }
 
 extension ViewController: BluetoothDelegate {
     func didBluetoothPoweredOn() {
-        self.performSegue(withIdentifier: Constants.Storyboard.peripheralViewController.rawValue, sender: nil)
+        performSegue(withIdentifier: Constants.Storyboard.peripheralViewController.rawValue, sender: nil)
+    }
+    
+    func didBluetoothOffOrUnknown() {
+        Bluetooth.shared.delegate = nil
+        showAlert(message: Constants.UserInterface.bluetoothOffOrUnknown.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { () -> (Void) in
+        }
     }
 }
 

@@ -48,9 +48,24 @@
                     <view key="view" contentMode="scaleToFill" id="EQ8-zJ-bhF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chP-6z-DkZ">
+                                <rect key="frame" x="207" y="188" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="chP-6z-DkZ" firstAttribute="centerX" secondItem="EQ8-zJ-bhF" secondAttribute="centerX" id="Aec-Dv-hZU"/>
+                            <constraint firstItem="chP-6z-DkZ" firstAttribute="top" secondItem="hU2-Xn-ZWe" secondAttribute="top" constant="100" id="L1g-Ha-7LN"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="hU2-Xn-ZWe"/>
                     </view>
+                    <connections>
+                        <outlet property="statusLabel" destination="chP-6z-DkZ" id="hkH-SX-B4p"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eE4-9o-Z9d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
