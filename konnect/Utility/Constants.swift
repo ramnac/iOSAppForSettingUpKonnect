@@ -11,14 +11,14 @@ import Foundation
 enum Constants {
     
     enum UserInterface: String {
-        case bluetoothOffOrUnknown = "Bluetooth is Off. Enable it to proceed further"
+        case bluetoothOffOrUnknown = "Your device's bluetooth is not enabled. Please enable to continue"
         case okActionTitle = "Ok"
-        case peripheralTooFar = "Device is too far!! Move closer and retry"
-        case timeoutOccured = "Coundn't find any Argon device, please retry"
-        case scanning = "Scanning..."
-        case connecting = "Connecting..."
-        case connected = "Connected..."
-        case invalidPeripheralConnected = "Looks like not an Argin device, some issue!"
+        case peripheralTooFar = "Device is too far, please move closer and try again"
+        case timeoutOccured = "Couldn't find any device, please try again"
+        case scanning = "Scanning for device"
+        case connecting = "Connecting to device"
+        case connected = "Connected to device"
+        case invalidPeripheralConnected = "Device isn't recognised, please try again"
     }
     
     enum Storyboard: String {
