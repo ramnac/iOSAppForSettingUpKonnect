@@ -20,6 +20,10 @@ enum Constants {
         case connected = "Connected to device"
         case invalidPeripheralConnected = "Device isn't recognised, please try again"
         case failToConnectPeripheral = "Couldn't connect to peripheral - some weird issue"
+        case failToDiscoverPeripheralServices = "failed to discover peripheral services"
+        case failToDiscoverCharacteristics = "failed to discover characteristics"
+        case failToUpdateNotificationState = "failed to update Notification state"
+        case failToUpdateValueForCharacteristic = "failed to update value for characteristic"
     }
     
     enum Storyboard: String {
@@ -30,6 +34,7 @@ enum Constants {
         case serviceUUID = "6FA90001-5C4E-48A8-94F4-8030546F36FC"
         case rxCharacterisiticUUID = "6FA90004-5C4E-48A8-94F4-8030546F36FC"
         case txCharacterisiticUUID = "6FA90003-5C4E-48A8-94F4-8030546F36FC"
+        case deviceNamePrefix = "argon-"
         
         enum Numbers: Int {
             case rssiMinimumStrength = -90

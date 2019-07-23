@@ -23,6 +23,10 @@ protocol BluetoothDelegate: class {
     func didConnectedToInvalidPeripheral()
     func didBluetoothOffOrUnknown()
     func didFailedToConnectPeripheral()
+    func didFailToDiscoverPeripheralServices()
+    func didFailToDiscoverCharacteristics()
+    func didFailToUpdateNotificationState()
+    func didFailToUpdateValueForCharacteristic()
 }
 
 extension BluetoothDelegate {
@@ -34,6 +38,10 @@ extension BluetoothDelegate {
     func didConnectedToInvalidPeripheral() {}
     func didBluetoothOffOrUnknown() {}
     func didFailedToConnectPeripheral() {}
+    func didFailToDiscoverPeripheralServices() {}
+    func didFailToDiscoverCharacteristics() {}
+    func didFailToUpdateNotificationState() {}
+    func didFailToUpdateValueForCharacteristic() {}
 }
 
 class Bluetooth: NSObject {
@@ -43,6 +51,10 @@ class Bluetooth: NSObject {
     private(set) var state: BluetoothState?
     
     weak var delegate: BluetoothDelegate?
+    
+    private let argonServiceUUID = CBUUID(string: Constants.Bluetooth.serviceUUID.rawValue)
+    private let rxCharacteristicUUID = CBUUID(string: Constants.Bluetooth.rxCharacterisiticUUID.rawValue)
+    private let txCharacteristicUUID = CBUUID(string: Constants.Bluetooth.txCharacterisiticUUID.rawValue)
     
     private var coreBluetoothManager: CBCentralManager!
     
@@ -65,7 +77,7 @@ class Bluetooth: NSObject {
     
     func scanForPeripherals() {
         restartTimeoutWorkItem()
-        coreBluetoothManager.scanForPeripherals(withServices: [CBUUID(string: Constants.Bluetooth.serviceUUID.rawValue)], options: nil)
+        coreBluetoothManager.scanForPeripherals(withServices: [argonServiceUUID], options: nil)
     }
     
     func stopScan() {
@@ -111,13 +123,15 @@ extension Bluetooth: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        guard let _ = peripheral.name else {
+        guard let peripheralName = peripheral.name, peripheralName.hasPrefix(Constants.Bluetooth.deviceNamePrefix.rawValue) else {
             coreBluetoothManager.cancelPeripheralConnection(peripheral)
             cancelTimeoutWorkItem()
             delegate?.didConnectedToInvalidPeripheral()
             return
         }
+        restartTimeoutWorkItem()
         delegate?.didPeripheralConnected()
+        peripheral.discoverServices([argonServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -128,4 +142,67 @@ extension Bluetooth: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         //Handle this only if you have an user interface interaction with this use case
     }
+}
+
+extension Bluetooth: CBPeripheralDelegate {
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if let _ = error {
+            cancelTimeoutWorkItem()
+            delegate?.didFailToDiscoverPeripheralServices()
+            return
+        }
+        if let peripheralServices = peripheral.services {
+            for service in peripheralServices {
+                if service.uuid.isEqual(Constants.Bluetooth.serviceUUID.rawValue) {
+                    restartTimeoutWorkItem()
+                    peripheral.discoverCharacteristics([rxCharacteristicUUID,txCharacteristicUUID], for: service)
+                    return
+                }
+            }
+        }
+        cancelTimeoutWorkItem()
+        delegate?.didFailToDiscoverPeripheralServices()
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if let _ = error {
+            cancelTimeoutWorkItem()
+            delegate?.didFailToDiscoverCharacteristics()
+            return
+        }
+        if service.uuid.isEqual(Constants.Bluetooth.serviceUUID.rawValue) {
+            if let serviceCharacteristics = service.characteristics {
+                for characteristic in serviceCharacteristics {
+                    if characteristic.uuid.isEqual(Constants.Bluetooth.txCharacterisiticUUID.rawValue) {
+                        restartTimeoutWorkItem()
+                        peripheral.setNotifyValue(true, for: characteristic)
+                    }
+                }
+            }
+        }
+        cancelTimeoutWorkItem()
+        delegate?.didFailToDiscoverCharacteristics()
+        return
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        if error != nil || !characteristic.isNotifying {
+            cancelTimeoutWorkItem()
+            delegate?.didFailToUpdateNotificationState()
+            return
+        }
+        cancelTimeoutWorkItem()
+        restartTimeoutWorkItem()
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        if let _ = error {
+            cancelTimeoutWorkItem()
+            delegate?.didFailToUpdateValueForCharacteristic()
+            return
+        }
+        //ToDo
+    }
+    
 }

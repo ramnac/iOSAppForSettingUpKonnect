@@ -91,6 +91,22 @@ extension PeripheralViewController: BluetoothDelegate {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToConnectPeripheral.rawValue)
     }
     
+    func didFailToDiscoverPeripheralServices() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToDiscoverPeripheralServices.rawValue)
+    }
+    
+    func didFailToDiscoverCharacteristics() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToDiscoverCharacteristics.rawValue)
+    }
+    
+    func didFailToUpdateNotificationState() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToUpdateNotificationState.rawValue)
+    }
+    
+    func didFailToUpdateValueForCharacteristic() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToUpdateValueForCharacteristic.rawValue)
+    }
+    
     private func handleExceptionWithAnAlertMessage(message: String) {
         doResetStatusLabelAndHideLoadingIndicator()
         showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
