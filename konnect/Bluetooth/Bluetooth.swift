@@ -20,7 +20,7 @@ protocol BluetoothDelegate: class {
     func didTimeoutOccured()
     func didPeripheralDiscovered()
     func didPeripheralConnected()
-    func didConnectToInvalidPeripheral()
+    func didConnectedToInvalidPeripheral()
     func didBluetoothOffOrUnknown()
     func didFailedToConnectPeripheral()
 }
@@ -31,7 +31,7 @@ extension BluetoothDelegate {
     func didTimeoutOccured() {}
     func didPeripheralDiscovered() {}
     func didPeripheralConnected() {}
-    func didConnectToInvalidPeripheral() {}
+    func didConnectedToInvalidPeripheral() {}
     func didBluetoothOffOrUnknown() {}
     func didFailedToConnectPeripheral() {}
 }
@@ -114,7 +114,7 @@ extension Bluetooth: CBCentralManagerDelegate {
         guard let _ = peripheral.name else {
             coreBluetoothManager.cancelPeripheralConnection(peripheral)
             cancelTimeoutWorkItem()
-            delegate?.didConnectToInvalidPeripheral()
+            delegate?.didConnectedToInvalidPeripheral()
             return
         }
         delegate?.didPeripheralConnected()

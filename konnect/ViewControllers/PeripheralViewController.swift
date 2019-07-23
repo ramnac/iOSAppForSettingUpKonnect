@@ -83,7 +83,7 @@ extension PeripheralViewController: BluetoothDelegate {
         hideLoadingIndicator()
     }
     
-    func didConnectToInvalidPeripheral() {
+    func didConnectedToInvalidPeripheral() {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.invalidPeripheralConnected.rawValue)
     }
     
