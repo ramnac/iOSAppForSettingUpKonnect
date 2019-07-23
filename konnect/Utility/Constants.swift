@@ -19,6 +19,7 @@ enum Constants {
         case connecting = "Connecting to device"
         case connected = "Connected to device"
         case invalidPeripheralConnected = "Device isn't recognised, please try again"
+        case failToConnectPeripheral = "Couldn't connect to peripheral - some weird issue"
     }
     
     enum Storyboard: String {

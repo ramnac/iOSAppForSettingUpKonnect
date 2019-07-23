@@ -38,7 +38,7 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
     }
     
     @objc private func resetBluetoothAndUserInterfaceState() {
-        Bluetooth.shared.resetState()
+        Bluetooth.shared.stopScan()
         doResetStatusLabelAndHideLoadingIndicator()
         clearBluetoothDelegateAndPopToRootViewController()
     }
@@ -85,6 +85,10 @@ extension PeripheralViewController: BluetoothDelegate {
     
     func didConnectToInvalidPeripheral() {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.invalidPeripheralConnected.rawValue)
+    }
+    
+    func didFailedToConnectPeripheral() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToConnectPeripheral.rawValue)
     }
     
     private func handleExceptionWithAnAlertMessage(message: String) {

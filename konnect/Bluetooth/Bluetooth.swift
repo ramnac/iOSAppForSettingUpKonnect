@@ -12,9 +12,6 @@ import CoreBluetooth
 enum BluetoothState {
     case on
     case offOrUnknown
-    case scanning
-    case peripheralDiscovered
-    case peripheralConnected
 }
 
 protocol BluetoothDelegate: class {
@@ -25,6 +22,7 @@ protocol BluetoothDelegate: class {
     func didPeripheralConnected()
     func didConnectToInvalidPeripheral()
     func didBluetoothOffOrUnknown()
+    func didFailedToConnectPeripheral()
 }
 
 extension BluetoothDelegate {
@@ -35,6 +33,7 @@ extension BluetoothDelegate {
     func didPeripheralConnected() {}
     func didConnectToInvalidPeripheral() {}
     func didBluetoothOffOrUnknown() {}
+    func didFailedToConnectPeripheral() {}
 }
 
 class Bluetooth: NSObject {
@@ -54,7 +53,6 @@ class Bluetooth: NSObject {
             return DispatchWorkItem() {
                 [weak self] in
                 self?.coreBluetoothManager.stopScan()
-                self?.state = .on
                 self?.delegate?.didTimeoutOccured()
             }
         }
@@ -66,15 +64,13 @@ class Bluetooth: NSObject {
     }
     
     func scanForPeripherals() {
-        state = .scanning
         restartTimeoutWorkItem()
         coreBluetoothManager.scanForPeripherals(withServices: [CBUUID(string: Constants.Bluetooth.serviceUUID.rawValue)], options: nil)
     }
     
-    func resetState() {
+    func stopScan() {
         cancelTimeoutWorkItem()
         coreBluetoothManager.stopScan()
-        state = .on
     }
     
     private func cancelTimeoutWorkItem() {
@@ -103,7 +99,6 @@ extension Bluetooth: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        state = .peripheralDiscovered
         coreBluetoothManager.stopScan()
         if RSSI.int32Value < Int32(Constants.Bluetooth.Numbers.rssiMinimumStrength.rawValue) {
             cancelTimeoutWorkItem()
@@ -116,14 +111,21 @@ extension Bluetooth: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        state = .peripheralConnected
         guard let _ = peripheral.name else {
             coreBluetoothManager.cancelPeripheralConnection(peripheral)
-            state = .on
             cancelTimeoutWorkItem()
             delegate?.didConnectToInvalidPeripheral()
             return
         }
         delegate?.didPeripheralConnected()
+    }
+    
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        cancelTimeoutWorkItem()
+        delegate?.didFailedToConnectPeripheral()
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        //Handle this only if you have an user interface interaction with this use case
     }
 }
