@@ -18,6 +18,7 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
         super.viewDidLoad()
 
         startPeripheralScan()
+        addObserver(forNotification: UIApplication.didEnterBackgroundNotification)
     }
     
     private func startPeripheralScan() {
@@ -32,11 +33,26 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        statusLabel.text = ""
-        Bluetooth.shared.delegate = nil
+    private func addObserver(forNotification notificationName: NSNotification.Name) {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resetBluetoothAndUserInterfaceState), name: notificationName, object: nil)
     }
+    
+    @objc private func resetBluetoothAndUserInterfaceState() {
+        Bluetooth.shared.resetState()
+        doResetStatusLabelAndHideLoadingIndicator()
+        clearBluetoothDelegateAndPopToRootViewController()
+    }
+    
+    private func doResetStatusLabelAndHideLoadingIndicator() {
+        statusLabel.text = ""
+        hideLoadingIndicator()
+    }
+    
+    private func clearBluetoothDelegateAndPopToRootViewController() {
+        Bluetooth.shared.delegate = nil
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -72,10 +88,9 @@ extension PeripheralViewController: BluetoothDelegate {
     }
     
     private func handleExceptionWithAnAlertMessage(message: String) {
-        statusLabel.text = ""
-        hideLoadingIndicator()
-        showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { () -> (Void) in
-            self.navigationController?.popToRootViewController(animated: true)
+        doResetStatusLabelAndHideLoadingIndicator()
+        showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
+            self?.clearBluetoothDelegateAndPopToRootViewController()
         }
     }
 }

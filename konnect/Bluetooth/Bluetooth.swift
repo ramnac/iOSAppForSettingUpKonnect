@@ -71,6 +71,12 @@ class Bluetooth: NSObject {
         coreBluetoothManager.scanForPeripherals(withServices: [CBUUID(string: Constants.Bluetooth.serviceUUID.rawValue)], options: nil)
     }
     
+    func resetState() {
+        cancelTimeoutWorkItem()
+        coreBluetoothManager.stopScan()
+        state = .on
+    }
+    
     private func cancelTimeoutWorkItem() {
         if let workItem = timeoutWorkItemReference {
             workItem.cancel()
