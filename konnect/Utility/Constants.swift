@@ -56,7 +56,7 @@ enum Constants {
         
         enum Numbers: Int {
             case rssiMinimumStrength = -90
-            case scanTimeoutInSeconds = 30
+            case scanTimeoutInSeconds = 60
         }
     }
 }

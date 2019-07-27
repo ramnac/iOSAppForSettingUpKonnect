@@ -50,15 +50,39 @@ class PasswordEntryViewController: UIViewController, LoadingIndicatorDelegate, A
 
 extension PasswordEntryViewController: BluetoothDelegate {
     func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any]) {
+        clearBluetoothDelegate()
+        hideLoadingIndicator()
         if let wifiSetUpResponse = jsonResponse[Constants.Bluetooth.wifiSetUpKeyName.rawValue] as? String {
             if wifiSetUpResponse == Constants.Bluetooth.wifiSetUpSuccess.rawValue {
                 performSegue(withIdentifier: Constants.Storyboard.wifiSetUpSuccessViewController.rawValue, sender: nil)
-                
             } else if wifiSetUpResponse == Constants.Bluetooth.wifiSetUpFailure.rawValue {
-                showAlert(message: Constants.UserInterface.wifiSetUpFailed.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
-                    self?.clearBluetoothDelegate()
+                showAlert(message: Constants.UserInterface.wifiSetUpFailed.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) {
                 }
             }
+        }
+    }
+    
+    func didFailToDiscoverPeripheralServices() {
+        print("didFailToDiscoverPeripheralServices")
+    }
+    func didFailToDiscoverCharacteristics() {
+        print("didFailToDiscoverCharacteristics")
+    }
+    func didFailToUpdateNotificationState() {
+        print("didFailToUpdateNotificationState")
+    }
+    func didFailToUpdateValueForCharacteristic() {
+        print("didFailToUpdateValueForCharacteristic")
+    }
+    
+    func didTimeoutOccured() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.timeoutOccured.rawValue)
+    }
+    
+    private func handleExceptionWithAnAlertMessage(message: String) {
+        clearBluetoothDelegate()
+        hideLoadingIndicator()
+        showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { 
         }
     }
 }
