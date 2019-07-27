@@ -74,11 +74,117 @@
                     <connections>
                         <outlet property="scanForWifiNetworksButton" destination="zb4-19-oRy" id="rKE-zF-CpR"/>
                         <outlet property="statusLabel" destination="chP-6z-DkZ" id="hkH-SX-B4p"/>
+                        <segue destination="0FS-JV-nTX" kind="show" identifier="availableNetworksTableViewController" id="Op3-2W-dd0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eE4-9o-Z9d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1849" y="-538"/>
+        </scene>
+        <!--Available Networks Table View Controller-->
+        <scene sceneID="y4H-Gt-mJx">
+            <objects>
+                <tableViewController id="0FS-JV-nTX" customClass="AvailableNetworksTableViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vem-HZ-1pO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="availableNetworksTableViewCell" textLabel="yy6-Ti-OLd" style="IBUITableViewCellStyleDefault" id="z7X-Yq-5eu">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z7X-Yq-5eu" id="tWJ-8b-Imh">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yy6-Ti-OLd">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="0FS-JV-nTX" id="8if-mC-zSv"/>
+                            <outlet property="delegate" destination="0FS-JV-nTX" id="YCF-BB-Zof"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="x0T-KZ-ax9" kind="show" identifier="passwordEntryViewController" id="vxe-3E-9xU"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Icf-1f-jgg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2719" y="-538"/>
+        </scene>
+        <!--Password Entry View Controller-->
+        <scene sceneID="kdQ-9j-oRm">
+            <objects>
+                <viewController id="x0T-KZ-ax9" customClass="PasswordEntryViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fDO-hK-6Q1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hhx-08-PdB">
+                                <rect key="frame" x="50" y="188" width="314" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="x0T-KZ-ax9" eventType="primaryActionTriggered" id="1ig-Kp-Vqx"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hhx-08-PdB" firstAttribute="leading" secondItem="FpJ-Wk-WWt" secondAttribute="leading" constant="50" id="7S6-ke-AN8"/>
+                            <constraint firstItem="FpJ-Wk-WWt" firstAttribute="trailing" secondItem="hhx-08-PdB" secondAttribute="trailing" constant="50" id="rfH-fG-2ZP"/>
+                            <constraint firstItem="hhx-08-PdB" firstAttribute="top" secondItem="FpJ-Wk-WWt" secondAttribute="top" constant="100" id="xeJ-lc-mcv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FpJ-Wk-WWt"/>
+                    </view>
+                    <connections>
+                        <segue destination="UaK-YA-YJk" kind="show" identifier="wifiSetUpSuccessViewController" id="ggL-ov-g0B"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Asl-Nh-zNB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3643" y="-538"/>
+        </scene>
+        <!--Wi Fi Set Up Success View Controller-->
+        <scene sceneID="0nL-rY-9af">
+            <objects>
+                <viewController id="UaK-YA-YJk" customClass="WiFiSetUpSuccessViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1YJ-0L-4nU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOB-Sb-4XV">
+                                <rect key="frame" x="25" y="448" width="364" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="rOB-Sb-4XV" secondAttribute="trailing" constant="25" id="GmE-MA-LfC"/>
+                            <constraint firstItem="rOB-Sb-4XV" firstAttribute="centerY" secondItem="1YJ-0L-4nU" secondAttribute="centerY" id="RQS-RK-cRh"/>
+                            <constraint firstItem="rOB-Sb-4XV" firstAttribute="leading" secondItem="1YJ-0L-4nU" secondAttribute="leading" constant="25" id="yAh-2M-LNe"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7c3-wP-ZVM"/>
+                    </view>
+                    <connections>
+                        <outlet property="wifiSetUpSuccessLabel" destination="rOB-Sb-4XV" id="HWL-uz-eOm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DJB-cM-6x9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4529" y="-538"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KVv-oy-Na5">

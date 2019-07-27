@@ -25,6 +25,9 @@ enum Constants {
         case failToDiscoverCharacteristics = "failed to discover characteristics"
         case failToUpdateNotificationState = "failed to update Notification state"
         case failToUpdateValueForCharacteristic = "failed to update value for characteristic"
+        case noWiFiNetworksFound = "No wifi network available"
+        case wifiSetUpSuccess = "The Andersen chargepoint unit is now connected to the local WiFi network"
+        case wifiSetUpFailed = "Wifi set up is failed. Might be invalid password"
         
         enum Button: String {
             case scanForWifiNetworks = "SCAN FOR WiFi NETWORKS"
@@ -33,6 +36,10 @@ enum Constants {
     
     enum Storyboard: String {
         case peripheralViewController = "peripheralViewController"
+        case availableNetworksTableViewController = "availableNetworksTableViewController"
+        case availableNetworksTableViewCell = "availableNetworksTableViewCell"
+        case passwordEntryViewController = "passwordEntryViewController"
+        case wifiSetUpSuccessViewController = "wifiSetUpSuccessViewController"
     }
     
     enum Bluetooth: String {
@@ -41,10 +48,15 @@ enum Constants {
         case txCharacterisiticUUID = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
         case deviceNamePrefix = "Argon-"
         case searchWiFiRequest = "{\"request\":\"wlanscan\"}"
+        case validateWiFiPasswordRequest = "{\"request\":\"wifi\",\"ssid\":\"%@\",\"psk\":\"%@\"}"
+        
+        case wifiSetUpKeyName = "wifisetup"
+        case wifiSetUpSuccess = "ok"
+        case wifiSetUpFailure = "failed"
         
         enum Numbers: Int {
             case rssiMinimumStrength = -90
-            case scanTimeoutSeconds = 60
+            case scanTimeoutInSeconds = 30
         }
     }
 }

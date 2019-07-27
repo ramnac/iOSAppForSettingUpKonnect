@@ -9,6 +9,11 @@
 import Foundation
 import CoreBluetooth
 
+enum BluetoothOperation {
+    case searchWiFi
+    case validateWiFiPassword
+}
+
 enum BluetoothState {
     case on
     case offOrUnknown
@@ -27,6 +32,8 @@ protocol BluetoothDelegate: class {
     func didFailToDiscoverCharacteristics()
     func didFailToUpdateNotificationState()
     func didFailToUpdateValueForCharacteristic()
+    func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String])
+    func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any])
 }
 
 extension BluetoothDelegate {
@@ -42,6 +49,8 @@ extension BluetoothDelegate {
     func didFailToDiscoverCharacteristics() {}
     func didFailToUpdateNotificationState() {}
     func didFailToUpdateValueForCharacteristic() {}
+    func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String]) {}
+    func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any]) {}
 }
 
 class Bluetooth: NSObject {
@@ -49,6 +58,8 @@ class Bluetooth: NSObject {
     static let shared = Bluetooth()
     
     private(set) var state: BluetoothState?
+    
+    private(set) var operation: BluetoothOperation?
     
     weak var delegate: BluetoothDelegate?
     
@@ -62,6 +73,9 @@ class Bluetooth: NSObject {
     
     private var timeoutWorkItemReference: DispatchWorkItem?
     
+    private var ssidName: String?
+    private var wifiPassword: String?
+    
     private var timeoutWorkItem: DispatchWorkItem {
         get {
             return DispatchWorkItem() {
@@ -69,6 +83,9 @@ class Bluetooth: NSObject {
                 self?.peripheralToConnect = nil
                 self?.coreBluetoothManager.stopScan()
                 self?.delegate?.didTimeoutOccured()
+                self?.operation = nil
+                self?.ssidName = nil
+                self?.wifiPassword = nil
             }
         }
     }
@@ -87,16 +104,27 @@ class Bluetooth: NSObject {
         cancelTimeoutWorkItem()
         peripheralToConnect = nil
         coreBluetoothManager.stopScan()
+        //ToDo : cleanup needs to be rechecked
+        operation = nil
+        ssidName = nil
+        wifiPassword = nil
     }
     
-    func scanWiFiNetworks() {
+    func performOperation(bluetoothOperation:BluetoothOperation) {
         guard let peripheralToConnect = peripheralToConnect else {
             //May be a delegate callback is needed here
             return
         }
         restartTimeoutWorkItem()
+        operation = bluetoothOperation
         peripheralToConnect.delegate = self
         peripheralToConnect.discoverServices([argonServiceUUID])
+    }
+    
+    func validateWiFiPassword(password: String, forSSID name: String) {
+        ssidName = name
+        wifiPassword = password
+        performOperation(bluetoothOperation: .validateWiFiPassword)
     }
     
     private func cancelTimeoutWorkItem() {
@@ -109,7 +137,7 @@ class Bluetooth: NSObject {
     private func restartTimeoutWorkItem() {
         cancelTimeoutWorkItem()
         timeoutWorkItemReference = timeoutWorkItem
-        DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(Constants.Bluetooth.Numbers.scanTimeoutSeconds.rawValue), execute: timeoutWorkItemReference!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(Constants.Bluetooth.Numbers.scanTimeoutInSeconds.rawValue), execute: timeoutWorkItemReference!)
     }
 }
 
@@ -200,11 +228,27 @@ extension Bluetooth: CBPeripheralDelegate {
         }
         
         if let txCharacteristic = txCharacteristic, let rxCharacteristic = rxCharacteristic  {
+            restartTimeoutWorkItem()
             peripheral.setNotifyValue(true, for: txCharacteristic)
-            if let searchWiFiRequestData = Constants.Bluetooth.searchWiFiRequest.rawValue.data(using: .utf8) {
-                peripheral.writeValue(searchWiFiRequestData, for: rxCharacteristic, type: .withoutResponse)
+            if operation == .searchWiFi {
+                if let searchWiFiRequestData = Constants.Bluetooth.searchWiFiRequest.rawValue.data(using: .utf8) {
+                    peripheral.writeValue(searchWiFiRequestData, for: rxCharacteristic, type: .withoutResponse)
+                } else {
+                    //No need to handle this as this will never happen
+                }
+            } else if operation == .validateWiFiPassword {
+                if let name = ssidName, let password = wifiPassword {
+                    let request = String(format: Constants.Bluetooth.validateWiFiPasswordRequest.rawValue, name, password)
+                    if let validateWiFiPasswordData = request.data(using: .utf8) {
+                        peripheral.writeValue(validateWiFiPasswordData, for: rxCharacteristic, type: .withoutResponse)
+                        ssidName = nil
+                        wifiPassword = nil
+                    } else {
+                        //No need to handle this as this will never happen
+                    }
+                }
             } else {
-                //ToDo need to handle this error
+                //No need to handle this as this will never happen
             }
         } else {
             cancelTimeoutWorkItem()
@@ -218,7 +262,6 @@ extension Bluetooth: CBPeripheralDelegate {
             delegate?.didFailToUpdateNotificationState()
             return
         }
-        cancelTimeoutWorkItem()
         restartTimeoutWorkItem()
     }
     
@@ -228,13 +271,28 @@ extension Bluetooth: CBPeripheralDelegate {
             delegate?.didFailToUpdateValueForCharacteristic()
             return
         }
-        //ToDo
-        let data: Data = characteristic.value!
-        if let string = String(data: data, encoding: .utf8) {
-            print(string)
-        } else {
-            print("not a valid UTF-8 sequence")
+        
+        if let characteristicValue = characteristic.value {
+            if operation == .searchWiFi {
+                if let wifiNetworksArray = try? JSONSerialization.jsonObject(with: characteristicValue, options: []) as? [String] {
+                    print(wifiNetworksArray)
+                    cancelTimeoutWorkItem()
+                    delegate?.didUpdateValueForWiFiNetworks(with: wifiNetworksArray)
+                    return
+                }
+            } else if operation == .validateWiFiPassword {
+                if let wifiPasswordUpdateResponse = try? JSONSerialization.jsonObject(with: characteristicValue, options: []) as? [String: Any] {
+                    print(wifiPasswordUpdateResponse)
+                    cancelTimeoutWorkItem()
+                    delegate?.didUpdateValueForWiFiPassword(with: wifiPasswordUpdateResponse)
+                    return
+                }
+            } else {
+                //No need to handle this as this will never happen
+            }
         }
+        cancelTimeoutWorkItem()
+        delegate?.didFailToUpdateValueForCharacteristic()
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {

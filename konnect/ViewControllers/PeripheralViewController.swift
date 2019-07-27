@@ -15,6 +15,8 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var scanForWifiNetworksButton: UIButton!
     
+    fileprivate var wifiNetworks: [String]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,8 +53,12 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
     }
     
     private func clearBluetoothDelegateAndPopToRootViewController() {
-        Bluetooth.shared.delegate = nil
+        clearBluetoothDelegate()
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    private func clearBluetoothDelegate() {
+        Bluetooth.shared.delegate = nil
     }
     
     private func hideScanForWifiNetworksButton() {
@@ -71,11 +77,18 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
             if bluetoothState == .on {
                 statusLabel.text = Constants.UserInterface.searchingWiFi.rawValue
                 showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
-                Bluetooth.shared.scanWiFiNetworks()
+                Bluetooth.shared.performOperation(bluetoothOperation: .searchWiFi)
             }
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.Storyboard.availableNetworksTableViewController.rawValue {
+            if let availableNetworksTableViewController = segue.destination as? AvailableNetworksTableViewController, let _ = wifiNetworks {
+                availableNetworksTableViewController.wifiNetworkSSIDs = wifiNetworks
+            }
+        }
+    }
     
     
     /*
@@ -106,7 +119,7 @@ extension PeripheralViewController: BluetoothDelegate {
     func didPeripheralConnected() {
         statusLabel.text = Constants.UserInterface.connected.rawValue
         hideLoadingIndicator()
-        Bluetooth.shared.delegate = nil
+        clearBluetoothDelegate()
         showScanForWifiNetworksButton()
     }
     
@@ -132,6 +145,19 @@ extension PeripheralViewController: BluetoothDelegate {
     
     func didFailToUpdateValueForCharacteristic() {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToUpdateValueForCharacteristic.rawValue)
+    }
+    
+    func didUpdateValueForWiFiNetworks(with wifiNetworksArray: [String]) {
+        var wifiNetworksArrayCopy = wifiNetworksArray
+        wifiNetworksArrayCopy = wifiNetworksArrayCopy.filter({ $0 != ""})
+        if wifiNetworksArrayCopy.count == 0 {
+            handleExceptionWithAnAlertMessage(message: Constants.UserInterface.noWiFiNetworksFound.rawValue)
+            return
+        }
+        doResetStatusLabelAndHideLoadingIndicator()
+        clearBluetoothDelegate()
+        wifiNetworks = wifiNetworksArrayCopy
+        performSegue(withIdentifier: Constants.Storyboard.availableNetworksTableViewController.rawValue, sender: nil)
     }
     
     private func handleExceptionWithAnAlertMessage(message: String) {
