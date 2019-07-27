@@ -55,15 +55,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb4-19-oRy">
+                                <rect key="frame" x="192" y="732" width="30" height="30"/>
+                                <connections>
+                                    <action selector="scanForWiFiNetworksButtonTapped:" destination="hhs-O9-XzV" eventType="touchUpInside" id="GHM-7o-gbO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="chP-6z-DkZ" firstAttribute="centerX" secondItem="EQ8-zJ-bhF" secondAttribute="centerX" id="Aec-Dv-hZU"/>
+                            <constraint firstItem="zb4-19-oRy" firstAttribute="centerX" secondItem="EQ8-zJ-bhF" secondAttribute="centerX" id="Br0-6k-e7L"/>
+                            <constraint firstItem="hU2-Xn-ZWe" firstAttribute="bottom" secondItem="zb4-19-oRy" secondAttribute="bottom" constant="100" id="Jby-9z-wqt"/>
                             <constraint firstItem="chP-6z-DkZ" firstAttribute="top" secondItem="hU2-Xn-ZWe" secondAttribute="top" constant="100" id="L1g-Ha-7LN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hU2-Xn-ZWe"/>
                     </view>
                     <connections>
+                        <outlet property="scanForWifiNetworksButton" destination="zb4-19-oRy" id="rKE-zF-CpR"/>
                         <outlet property="statusLabel" destination="chP-6z-DkZ" id="hkH-SX-B4p"/>
                     </connections>
                 </viewController>

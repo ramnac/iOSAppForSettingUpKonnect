@@ -56,6 +56,8 @@ class Bluetooth: NSObject {
     private let rxCharacteristicUUID = CBUUID(string: Constants.Bluetooth.rxCharacterisiticUUID.rawValue)
     private let txCharacteristicUUID = CBUUID(string: Constants.Bluetooth.txCharacterisiticUUID.rawValue)
     
+    private var peripheralToConnect: CBPeripheral?
+    
     private var coreBluetoothManager: CBCentralManager!
     
     private var timeoutWorkItemReference: DispatchWorkItem?
@@ -64,6 +66,7 @@ class Bluetooth: NSObject {
         get {
             return DispatchWorkItem() {
                 [weak self] in
+                self?.peripheralToConnect = nil
                 self?.coreBluetoothManager.stopScan()
                 self?.delegate?.didTimeoutOccured()
             }
@@ -82,7 +85,18 @@ class Bluetooth: NSObject {
     
     func stopScan() {
         cancelTimeoutWorkItem()
+        peripheralToConnect = nil
         coreBluetoothManager.stopScan()
+    }
+    
+    func scanWiFiNetworks() {
+        guard let peripheralToConnect = peripheralToConnect else {
+            //May be a delegate callback is needed here
+            return
+        }
+        restartTimeoutWorkItem()
+        peripheralToConnect.delegate = self
+        peripheralToConnect.discoverServices([argonServiceUUID])
     }
     
     private func cancelTimeoutWorkItem() {
@@ -119,6 +133,7 @@ extension Bluetooth: CBCentralManagerDelegate {
         }
         restartTimeoutWorkItem()
         delegate?.didPeripheralDiscovered()
+        peripheralToConnect = peripheral
         coreBluetoothManager.connect(peripheral, options: nil)
     }
     
@@ -129,9 +144,8 @@ extension Bluetooth: CBCentralManagerDelegate {
             delegate?.didConnectedToInvalidPeripheral()
             return
         }
-        restartTimeoutWorkItem()
+        cancelTimeoutWorkItem()
         delegate?.didPeripheralConnected()
-        peripheral.discoverServices([argonServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -154,7 +168,7 @@ extension Bluetooth: CBPeripheralDelegate {
         }
         if let peripheralServices = peripheral.services {
             for service in peripheralServices {
-                if service.uuid.isEqual(Constants.Bluetooth.serviceUUID.rawValue) {
+                if service.uuid.isEqual(argonServiceUUID) {
                     restartTimeoutWorkItem()
                     peripheral.discoverCharacteristics([rxCharacteristicUUID,txCharacteristicUUID], for: service)
                     return
@@ -171,19 +185,31 @@ extension Bluetooth: CBPeripheralDelegate {
             delegate?.didFailToDiscoverCharacteristics()
             return
         }
-        if service.uuid.isEqual(Constants.Bluetooth.serviceUUID.rawValue) {
+        var txCharacteristic: CBCharacteristic?
+        var rxCharacteristic: CBCharacteristic?
+        if service.uuid.isEqual(argonServiceUUID) {
             if let serviceCharacteristics = service.characteristics {
                 for characteristic in serviceCharacteristics {
-                    if characteristic.uuid.isEqual(Constants.Bluetooth.txCharacterisiticUUID.rawValue) {
-                        restartTimeoutWorkItem()
-                        peripheral.setNotifyValue(true, for: characteristic)
+                    if characteristic.uuid.isEqual(txCharacteristicUUID) {
+                        txCharacteristic = characteristic
+                    } else if characteristic.uuid.isEqual(rxCharacteristicUUID) {
+                        rxCharacteristic = characteristic
                     }
                 }
             }
         }
-        cancelTimeoutWorkItem()
-        delegate?.didFailToDiscoverCharacteristics()
-        return
+        
+        if let txCharacteristic = txCharacteristic, let rxCharacteristic = rxCharacteristic  {
+            peripheral.setNotifyValue(true, for: txCharacteristic)
+            if let searchWiFiRequestData = Constants.Bluetooth.searchWiFiRequest.rawValue.data(using: .utf8) {
+                peripheral.writeValue(searchWiFiRequestData, for: rxCharacteristic, type: .withoutResponse)
+            } else {
+                //ToDo need to handle this error
+            }
+        } else {
+            cancelTimeoutWorkItem()
+            delegate?.didFailToDiscoverCharacteristics()
+        }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
@@ -202,6 +228,16 @@ extension Bluetooth: CBPeripheralDelegate {
             delegate?.didFailToUpdateValueForCharacteristic()
             return
         }
+        //ToDo
+        let data: Data = characteristic.value!
+        if let string = String(data: data, encoding: .utf8) {
+            print(string)
+        } else {
+            print("not a valid UTF-8 sequence")
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         //ToDo
     }
     

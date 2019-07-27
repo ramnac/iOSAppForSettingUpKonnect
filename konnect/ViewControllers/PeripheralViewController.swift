@@ -13,12 +13,14 @@ import UIKit
 
 class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, AlertDelegate {
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var scanForWifiNetworksButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         startPeripheralScan()
         addObserver(forNotification: UIApplication.didEnterBackgroundNotification)
+        hideScanForWifiNetworksButton()
     }
     
     private func startPeripheralScan() {
@@ -53,6 +55,29 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
         self.navigationController?.popToRootViewController(animated: true)
     }
     
+    private func hideScanForWifiNetworksButton() {
+        scanForWifiNetworksButton.isHidden = true
+    }
+    
+    private func showScanForWifiNetworksButton() {
+        scanForWifiNetworksButton.isHidden = false
+        scanForWifiNetworksButton.setTitle(Constants.UserInterface.Button.scanForWifiNetworks.rawValue, for: .normal)
+    }
+    
+    @IBAction func scanForWiFiNetworksButtonTapped(_ sender: Any) {
+        let bluetooth = Bluetooth.shared
+        bluetooth.delegate = self
+        if let bluetoothState = bluetooth.state {
+            if bluetoothState == .on {
+                statusLabel.text = Constants.UserInterface.searchingWiFi.rawValue
+                showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
+                Bluetooth.shared.scanWiFiNetworks()
+            }
+        }
+    }
+    
+    
+    
     /*
     // MARK: - Navigation
 
@@ -81,6 +106,8 @@ extension PeripheralViewController: BluetoothDelegate {
     func didPeripheralConnected() {
         statusLabel.text = Constants.UserInterface.connected.rawValue
         hideLoadingIndicator()
+        Bluetooth.shared.delegate = nil
+        showScanForWifiNetworksButton()
     }
     
     func didConnectedToInvalidPeripheral() {

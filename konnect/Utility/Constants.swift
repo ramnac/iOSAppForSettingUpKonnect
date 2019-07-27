@@ -18,12 +18,17 @@ enum Constants {
         case scanning = "Scanning for device"
         case connecting = "Connecting to device"
         case connected = "Connected to device"
+        case searchingWiFi = "Searching WiFi Networks"
         case invalidPeripheralConnected = "Device isn't recognised, please try again"
         case failToConnectPeripheral = "Couldn't connect to peripheral - some weird issue"
         case failToDiscoverPeripheralServices = "failed to discover peripheral services"
         case failToDiscoverCharacteristics = "failed to discover characteristics"
         case failToUpdateNotificationState = "failed to update Notification state"
         case failToUpdateValueForCharacteristic = "failed to update value for characteristic"
+        
+        enum Button: String {
+            case scanForWifiNetworks = "SCAN FOR WiFi NETWORKS"
+        }
     }
     
     enum Storyboard: String {
@@ -32,13 +37,14 @@ enum Constants {
     
     enum Bluetooth: String {
         case serviceUUID = "6FA90001-5C4E-48A8-94F4-8030546F36FC"
-        case rxCharacterisiticUUID = "6FA90004-5C4E-48A8-94F4-8030546F36FC"
-        case txCharacterisiticUUID = "6FA90003-5C4E-48A8-94F4-8030546F36FC"
-        case deviceNamePrefix = "argon-"
+        case rxCharacterisiticUUID = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+        case txCharacterisiticUUID = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
+        case deviceNamePrefix = "Argon-"
+        case searchWiFiRequest = "{\"request\":\"wlanscan\"}"
         
         enum Numbers: Int {
             case rssiMinimumStrength = -90
-            case scanTimeoutSeconds = 15
+            case scanTimeoutSeconds = 60
         }
     }
 }
