@@ -9,6 +9,8 @@
 import Foundation
 import CoreBluetooth
 
+import UIKit
+
 enum BluetoothOperation {
     case searchWiFi
     case validateWiFiPassword
@@ -22,11 +24,14 @@ enum BluetoothState {
 protocol BluetoothDelegate: class {
     func didBluetoothPoweredOn()
     func didPeripheralUnreached()
+    
+    //Required method
     func didTimeoutOccured()
+    func didBluetoothOffOrUnknown()
+    
     func didPeripheralDiscovered()
     func didPeripheralConnected()
     func didConnectedToInvalidPeripheral()
-    func didBluetoothOffOrUnknown()
     func didFailedToConnectPeripheral()
     func didFailToDiscoverPeripheralServices()
     func didFailToDiscoverCharacteristics()
@@ -34,16 +39,15 @@ protocol BluetoothDelegate: class {
     func didFailToUpdateValueForCharacteristic()
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String])
     func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any])
+    func didFailedToFindConnectedPeripheral()
 }
 
 extension BluetoothDelegate {
     func didBluetoothPoweredOn() {}
     func didPeripheralUnreached() {}
-    func didTimeoutOccured() {}
     func didPeripheralDiscovered() {}
     func didPeripheralConnected() {}
     func didConnectedToInvalidPeripheral() {}
-    func didBluetoothOffOrUnknown() {}
     func didFailedToConnectPeripheral() {}
     func didFailToDiscoverPeripheralServices() {}
     func didFailToDiscoverCharacteristics() {}
@@ -51,6 +55,7 @@ extension BluetoothDelegate {
     func didFailToUpdateValueForCharacteristic() {}
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String]) {}
     func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any]) {}
+    func didFailedToFindConnectedPeripheral() {}
 }
 
 class Bluetooth: NSObject {
@@ -80,12 +85,8 @@ class Bluetooth: NSObject {
         get {
             return DispatchWorkItem() {
                 [weak self] in
-                self?.peripheralToConnect = nil
-                self?.coreBluetoothManager.stopScan()
                 self?.delegate?.didTimeoutOccured()
-                self?.operation = nil
-                self?.ssidName = nil
-                self?.wifiPassword = nil
+                self?.resetBluetooth()
             }
         }
     }
@@ -93,6 +94,7 @@ class Bluetooth: NSObject {
     private override init() {
         super.init()
         coreBluetoothManager = CBCentralManager(delegate: self, queue: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resetBluetooth), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     func scanForPeripherals() {
@@ -100,19 +102,22 @@ class Bluetooth: NSObject {
         coreBluetoothManager.scanForPeripherals(withServices: [argonServiceUUID], options: nil)
     }
     
-    func stopScan() {
-        cancelTimeoutWorkItem()
+    @objc private func resetBluetooth() {
         peripheralToConnect = nil
-        coreBluetoothManager.stopScan()
-        //ToDo : cleanup needs to be rechecked
+        if state == .on {
+            coreBluetoothManager.stopScan()
+        }
+        delegate = nil
         operation = nil
         ssidName = nil
         wifiPassword = nil
+        cancelTimeoutWorkItem()
     }
     
     func performOperation(bluetoothOperation:BluetoothOperation) {
         guard let peripheralToConnect = peripheralToConnect else {
-            //May be a delegate callback is needed here
+            delegate?.didFailedToFindConnectedPeripheral()
+            resetBluetooth()
             return
         }
         restartTimeoutWorkItem()
@@ -149,6 +154,7 @@ extension Bluetooth: CBCentralManagerDelegate {
         } else {
             state = .offOrUnknown
             delegate?.didBluetoothOffOrUnknown()
+            resetBluetooth()
         }
     }
     

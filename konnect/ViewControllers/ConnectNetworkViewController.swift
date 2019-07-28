@@ -10,10 +10,18 @@ import UIKit
 
 class ConnectNetworkViewController: UIViewController, LoadingIndicatorDelegate, AlertDelegate {
     
+    @IBOutlet weak var passwordTextField: UITextField!
+    
     var ssidName: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        customiseUserInterface()
+    }
+    
+    private func customiseUserInterface() {
+        navigationItem.title = Constants.UserInterface.NavigationTitle.connectNetwork.rawValue
+        passwordTextField.becomeFirstResponder()
     }
     
     private func clearBluetoothDelegate() {
@@ -22,29 +30,12 @@ class ConnectNetworkViewController: UIViewController, LoadingIndicatorDelegate, 
     
     @IBAction func doneButtonTapped(_ sender: UITextField) {
         sender.resignFirstResponder()
-        
-        //ToDo in the bluetooth class the state should be validated.. not here.. need to do that change every where
         if let passwordText = sender.text {
-            let bluetooth = Bluetooth.shared
-            bluetooth.delegate = self
-            if let bluetoothState = bluetooth.state {
-                if bluetoothState == .on {
-                    showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
-                    Bluetooth.shared.validateWiFiPassword(password: passwordText, forSSID: ssidName)
-                }
-            }
+            Bluetooth.shared.delegate = self
+            showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
+            Bluetooth.shared.validateWiFiPassword(password: passwordText, forSSID: ssidName)
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -54,25 +45,21 @@ extension ConnectNetworkViewController: BluetoothDelegate {
         hideLoadingIndicator()
         if let wifiSetUpResponse = jsonResponse[Constants.Bluetooth.wifiSetUpKeyName.rawValue] as? String {
             if wifiSetUpResponse == Constants.Bluetooth.wifiSetUpSuccess.rawValue {
-                performSegue(withIdentifier: Constants.Storyboard.wifiSetUpSuccessViewController.rawValue, sender: nil)
+                performSegue(withIdentifier: Constants.Storyboard.wifiConnectionSuccessViewController.rawValue, sender: nil)
             } else if wifiSetUpResponse == Constants.Bluetooth.wifiSetUpFailure.rawValue {
-                showAlert(message: Constants.UserInterface.wifiSetUpFailed.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) {
+                showAlert(message: Constants.UserInterface.wifiSetUpFailed.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
+                    self?.passwordTextField.becomeFirstResponder()
                 }
             }
         }
     }
     
-    func didFailToDiscoverPeripheralServices() {
-        print("didFailToDiscoverPeripheralServices")
+    func didFailedToFindConnectedPeripheral() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToFindConnectedPeripheral.rawValue)
     }
-    func didFailToDiscoverCharacteristics() {
-        print("didFailToDiscoverCharacteristics")
-    }
-    func didFailToUpdateNotificationState() {
-        print("didFailToUpdateNotificationState")
-    }
-    func didFailToUpdateValueForCharacteristic() {
-        print("didFailToUpdateValueForCharacteristic")
+    
+    func didBluetoothOffOrUnknown() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.bluetoothOffOrUnknown.rawValue)
     }
     
     func didTimeoutOccured() {
@@ -82,7 +69,8 @@ extension ConnectNetworkViewController: BluetoothDelegate {
     private func handleExceptionWithAnAlertMessage(message: String) {
         clearBluetoothDelegate()
         hideLoadingIndicator()
-        showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { 
+        showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
+            self?.navigationController?.popToRootViewController(animated: true)
         }
     }
 }

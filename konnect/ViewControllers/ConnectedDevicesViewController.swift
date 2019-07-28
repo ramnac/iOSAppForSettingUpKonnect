@@ -1,5 +1,5 @@
 //
-//  PeripheralViewController.swift
+//  ConnectedDevicesViewController.swift
 //  konnect
 //
 //  Created by Ram on 20/07/19.
@@ -20,21 +20,22 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        customiseUserInterface()
         startPeripheralScan()
         addObserver(forNotification: UIApplication.didEnterBackgroundNotification)
         hideScanForWifiNetworksButton()
     }
     
+    private func customiseUserInterface() {
+        navigationItem.title = Constants.UserInterface.NavigationTitle.connectedDevices.rawValue
+        navigationItem.hidesBackButton = true
+    }
+    
     private func startPeripheralScan() {
-        let bluetooth = Bluetooth.shared
-        bluetooth.delegate = self
-        if let bluetoothState = bluetooth.state {
-            if bluetoothState == .on {
-                statusLabel.text = Constants.UserInterface.scanning.rawValue
-                showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
-                Bluetooth.shared.scanForPeripherals()
-            }
-        }
+        Bluetooth.shared.delegate = self
+        statusLabel.text = Constants.UserInterface.scanning.rawValue
+        showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
+        Bluetooth.shared.scanForPeripherals()
     }
     
     private func addObserver(forNotification notificationName: NSNotification.Name) {
@@ -42,7 +43,6 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     }
     
     @objc private func resetBluetoothAndUserInterfaceState() {
-        Bluetooth.shared.stopScan()
         doResetStatusLabelAndHideLoadingIndicator()
         clearBluetoothDelegateAndPopToRootViewController()
     }
@@ -66,20 +66,15 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     }
     
     private func showScanForWifiNetworksButton() {
+    scanForWifiNetworksButton.setTitle(Constants.UserInterface.Button.scanForWifiNetworks.rawValue, for: .normal)
         scanForWifiNetworksButton.isHidden = false
-        scanForWifiNetworksButton.setTitle(Constants.UserInterface.Button.scanForWifiNetworks.rawValue, for: .normal)
     }
     
     @IBAction func scanForWiFiNetworksButtonTapped(_ sender: Any) {
-        let bluetooth = Bluetooth.shared
-        bluetooth.delegate = self
-        if let bluetoothState = bluetooth.state {
-            if bluetoothState == .on {
-                statusLabel.text = Constants.UserInterface.searchingWiFi.rawValue
-                showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
-                Bluetooth.shared.performOperation(bluetoothOperation: .searchWiFi)
-            }
-        }
+        Bluetooth.shared.delegate = self
+        statusLabel.text = Constants.UserInterface.searchingWiFi.rawValue
+        showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
+        Bluetooth.shared.performOperation(bluetoothOperation: .searchWiFi)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -104,6 +99,11 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
 }
 
 extension ConnectedDevicesViewController: BluetoothDelegate {
+    
+    func didBluetoothOffOrUnknown() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.bluetoothOffOrUnknown.rawValue)
+    }
+    
     func didPeripheralUnreached() {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.peripheralTooFar.rawValue)
     }
@@ -147,6 +147,10 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToUpdateValueForCharacteristic.rawValue)
     }
     
+    func didFailedToFindConnectedPeripheral() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToFindConnectedPeripheral.rawValue)
+    }
+    
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray: [String]) {
         var wifiNetworksArrayCopy = wifiNetworksArray
         wifiNetworksArrayCopy = wifiNetworksArrayCopy.filter({ $0 != ""})
@@ -161,9 +165,10 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
     }
     
     private func handleExceptionWithAnAlertMessage(message: String) {
+        clearBluetoothDelegate()
         doResetStatusLabelAndHideLoadingIndicator()
         showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
-            self?.clearBluetoothDelegateAndPopToRootViewController()
+            self?.navigationController?.popToRootViewController(animated: true)
         }
     }
 }

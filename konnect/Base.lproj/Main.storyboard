@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yWU-iR-fZH">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,12 +14,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="WiFiSetUpViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGO-2B-dqg">
-                                <rect key="frame" x="205" y="285" width="190" height="30"/>
-                                <state key="normal" title="Scan For Bluetooth Devices"/>
+                                <rect key="frame" x="192" y="732" width="30" height="30"/>
                                 <connections>
                                     <action selector="scanBluetoothButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VcI-2L-sOO"/>
                                 </connections>
@@ -25,13 +27,14 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="RGO-2B-dqg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Je-SG-myX"/>
-                            <constraint firstItem="RGO-2B-dqg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mhj-tg-caw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="RGO-2B-dqg" secondAttribute="bottom" constant="100" id="lBL-jY-sTB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="Hy2-QE-EYa"/>
                     <connections>
-                        <segue destination="hhs-O9-XzV" kind="show" identifier="peripheralViewController" id="2M1-5M-Nx2"/>
+                        <outlet property="continueButton" destination="RGO-2B-dqg" id="wwg-Ha-Ii1"/>
+                        <segue destination="hhs-O9-XzV" kind="show" identifier="connectedDevicesViewController" id="2M1-5M-Nx2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -43,17 +46,17 @@
             <objects>
                 <viewController id="hhs-O9-XzV" customClass="ConnectedDevicesViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EQ8-zJ-bhF">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chP-6z-DkZ">
-                                <rect key="frame" x="300" y="164" width="0.0" height="0.0"/>
+                                <rect key="frame" x="207" y="188" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb4-19-oRy">
-                                <rect key="frame" x="285" y="470" width="30" height="30"/>
+                                <rect key="frame" x="192" y="732" width="30" height="30"/>
                                 <connections>
                                     <action selector="scanForWiFiNetworksButtonTapped:" destination="hhs-O9-XzV" eventType="touchUpInside" id="GHM-7o-gbO"/>
                                 </connections>
@@ -83,19 +86,19 @@
             <objects>
                 <tableViewController id="0FS-JV-nTX" customClass="AvailableNetworksTableViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vem-HZ-1pO">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="availableNetworksTableViewCell" textLabel="yy6-Ti-OLd" style="IBUITableViewCellStyleDefault" id="z7X-Yq-5eu">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z7X-Yq-5eu" id="tWJ-8b-Imh">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yy6-Ti-OLd">
-                                            <rect key="frame" x="20" y="0.0" width="560" height="43.5"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -111,7 +114,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="x0T-KZ-ax9" kind="show" identifier="passwordEntryViewController" id="vxe-3E-9xU"/>
+                        <segue destination="x0T-KZ-ax9" kind="show" identifier="connectNetworkViewController" id="vxe-3E-9xU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Icf-1f-jgg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -123,11 +126,11 @@
             <objects>
                 <viewController id="x0T-KZ-ax9" customClass="ConnectNetworkViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fDO-hK-6Q1">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hhx-08-PdB">
-                                <rect key="frame" x="50" y="164" width="500" height="30"/>
+                                <rect key="frame" x="50" y="188" width="314" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
@@ -145,7 +148,8 @@
                         <viewLayoutGuide key="safeArea" id="FpJ-Wk-WWt"/>
                     </view>
                     <connections>
-                        <segue destination="UaK-YA-YJk" kind="show" identifier="wifiSetUpSuccessViewController" id="ggL-ov-g0B"/>
+                        <outlet property="passwordTextField" destination="hhx-08-PdB" id="u5L-Ty-Icf"/>
+                        <segue destination="UaK-YA-YJk" kind="show" identifier="wifiConnectionSuccessViewController" id="ggL-ov-g0B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Asl-Nh-zNB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -157,11 +161,11 @@
             <objects>
                 <viewController id="UaK-YA-YJk" customClass="WiFiConnectionSuccessViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1YJ-0L-4nU">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOB-Sb-4XV">
-                                <rect key="frame" x="25" y="300" width="550" height="0.0"/>
+                                <rect key="frame" x="25" y="448" width="364" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

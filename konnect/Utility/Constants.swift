@@ -25,6 +25,7 @@ enum Constants {
         case failToDiscoverCharacteristics = "failed to discover characteristics"
         case failToUpdateNotificationState = "failed to update Notification state"
         case failToUpdateValueForCharacteristic = "failed to update value for characteristic"
+        case failToFindConnectedPeripheral = "Failed to find connected peripheral. Oops!"
         case noWiFiNetworksFound = "No wifi network available"
         case wifiSetUpSuccess = "The Andersen chargepoint unit is now connected to the local WiFi network"
         case wifiSetUpFailed = "Wifi set up is failed. Might be invalid password"
@@ -38,16 +39,17 @@ enum Constants {
         }
         
         enum Button: String {
+            case wifiSetUp = "CONTINUE"
             case scanForWifiNetworks = "SCAN FOR WiFi NETWORKS"
         }
     }
     
     enum Storyboard: String {
-        case peripheralViewController = "peripheralViewController"
+        case connectedDevicesViewController = "connectedDevicesViewController"
         case availableNetworksTableViewController = "availableNetworksTableViewController"
         case availableNetworksTableViewCell = "availableNetworksTableViewCell"
-        case passwordEntryViewController = "passwordEntryViewController"
-        case wifiSetUpSuccessViewController = "wifiSetUpSuccessViewController"
+        case connectNetworkViewController = "connectNetworkViewController"
+        case wifiConnectionSuccessViewController = "wifiConnectionSuccessViewController"
     }
     
     enum Bluetooth: String {

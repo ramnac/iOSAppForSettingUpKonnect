@@ -499,7 +499,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.andersenev.konnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.andersenev.konnect";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.andersenev.konnect";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -520,7 +520,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.andersenev.konnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.andersenev.konnect";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.andersenev.konnect";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

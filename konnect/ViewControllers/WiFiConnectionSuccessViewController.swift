@@ -15,19 +15,12 @@ class WiFiConnectionSuccessViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        wifiSetUpSuccessLabel.text = Constants.UserInterface.wifiSetUpSuccess.rawValue
+        customiseUserInterface()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func customiseUserInterface() {
+        navigationItem.title = Constants.UserInterface.NavigationTitle.wifiConnectionSuccess.rawValue
+        wifiSetUpSuccessLabel.text = Constants.UserInterface.wifiSetUpSuccess.rawValue
     }
-    */
 
 }

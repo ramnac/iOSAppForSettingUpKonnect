@@ -10,18 +10,18 @@ import UIKit
 
 class WiFiSetUpViewController: UIViewController, AlertDelegate {
 
+    @IBOutlet weak var continueButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         customiseUserInterface()
     }
     
     private func customiseUserInterface() {
-        navigationController?.navigationBar.isHidden = true
+        //navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = Constants.UserInterface.NavigationTitle.wifiSetUp.rawValue
+        continueButton.setTitle(Constants.UserInterface.Button.wifiSetUp.rawValue, for: .normal)
     }
     
     @IBAction func scanBluetoothButtonTapped(_ sender: Any) {
@@ -38,8 +38,13 @@ class WiFiSetUpViewController: UIViewController, AlertDelegate {
 }
 
 extension WiFiSetUpViewController: BluetoothDelegate {
+    func didTimeoutOccured() {
+        //No need to handle anything in this
+    }
+    
     func didBluetoothPoweredOn() {
-        performSegue(withIdentifier: Constants.Storyboard.peripheralViewController.rawValue, sender: nil)
+        Bluetooth.shared.delegate = nil
+        performSegue(withIdentifier: Constants.Storyboard.connectedDevicesViewController.rawValue, sender: nil)
     }
     
     func didBluetoothOffOrUnknown() {
