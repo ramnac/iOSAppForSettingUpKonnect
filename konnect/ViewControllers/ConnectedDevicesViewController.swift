@@ -42,6 +42,7 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
         NotificationCenter.default.addObserver(self, selector: #selector(self.resetBluetoothAndUserInterfaceState), name: notificationName, object: nil)
     }
     
+    //Since this method hidesLoadingIndicator which will be called from any view controller which enters background
     @objc private func resetBluetoothAndUserInterfaceState() {
         doResetStatusLabelAndHideLoadingIndicator()
         clearBluetoothDelegate()
