@@ -21,6 +21,7 @@ class WiFiConnectionSuccessViewController: UIViewController {
     private func customiseUserInterface() {
         navigationItem.title = Constants.UserInterface.NavigationTitle.wifiConnectionSuccess.rawValue
         wifiSetUpSuccessLabel.text = Constants.UserInterface.wifiSetUpSuccess.rawValue
+        navigationItem.hidesBackButton = true
     }
 
 }

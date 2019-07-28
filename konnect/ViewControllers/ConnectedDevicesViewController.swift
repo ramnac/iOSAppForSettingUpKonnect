@@ -44,7 +44,7 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     
     @objc private func resetBluetoothAndUserInterfaceState() {
         doResetStatusLabelAndHideLoadingIndicator()
-        clearBluetoothDelegateAndPopToRootViewController()
+        clearBluetoothDelegate()
     }
     
     private func doResetStatusLabelAndHideLoadingIndicator() {

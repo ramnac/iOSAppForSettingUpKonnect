@@ -21,7 +21,16 @@ class ConnectNetworkViewController: UIViewController, LoadingIndicatorDelegate, 
     
     private func customiseUserInterface() {
         navigationItem.title = Constants.UserInterface.NavigationTitle.connectNetwork.rawValue
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         passwordTextField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        passwordTextField.resignFirstResponder()
     }
     
     private func clearBluetoothDelegate() {
