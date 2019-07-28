@@ -56,7 +56,7 @@ class AvailableNetworksTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.Storyboard.passwordEntryViewController.rawValue {
-            if let passwordEntryViewController = segue.destination as? PasswordEntryViewController {
+            if let passwordEntryViewController = segue.destination as? ConnectNetworkViewController {
                 passwordEntryViewController.ssidName = ssidName
             }
         }

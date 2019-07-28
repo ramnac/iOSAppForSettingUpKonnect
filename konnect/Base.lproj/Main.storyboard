@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yWU-iR-fZH">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Wi Fi Set Up View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="WiFiSetUpViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGO-2B-dqg">
-                                <rect key="frame" x="112" y="433" width="190" height="30"/>
+                                <rect key="frame" x="205" y="285" width="190" height="30"/>
                                 <state key="normal" title="Scan For Bluetooth Devices"/>
                                 <connections>
                                     <action selector="scanBluetoothButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VcI-2L-sOO"/>
@@ -41,22 +38,22 @@
             </objects>
             <point key="canvasLocation" x="1019" y="-538"/>
         </scene>
-        <!--Peripheral View Controller-->
+        <!--Connected Devices View Controller-->
         <scene sceneID="TqQ-Um-a5Y">
             <objects>
-                <viewController id="hhs-O9-XzV" customClass="PeripheralViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hhs-O9-XzV" customClass="ConnectedDevicesViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EQ8-zJ-bhF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chP-6z-DkZ">
-                                <rect key="frame" x="207" y="188" width="0.0" height="0.0"/>
+                                <rect key="frame" x="300" y="164" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb4-19-oRy">
-                                <rect key="frame" x="192" y="732" width="30" height="30"/>
+                                <rect key="frame" x="285" y="470" width="30" height="30"/>
                                 <connections>
                                     <action selector="scanForWiFiNetworksButtonTapped:" destination="hhs-O9-XzV" eventType="touchUpInside" id="GHM-7o-gbO"/>
                                 </connections>
@@ -86,19 +83,19 @@
             <objects>
                 <tableViewController id="0FS-JV-nTX" customClass="AvailableNetworksTableViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vem-HZ-1pO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="availableNetworksTableViewCell" textLabel="yy6-Ti-OLd" style="IBUITableViewCellStyleDefault" id="z7X-Yq-5eu">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z7X-Yq-5eu" id="tWJ-8b-Imh">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yy6-Ti-OLd">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <rect key="frame" x="20" y="0.0" width="560" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -121,16 +118,16 @@
             </objects>
             <point key="canvasLocation" x="2719" y="-538"/>
         </scene>
-        <!--Password Entry View Controller-->
+        <!--Connect Network View Controller-->
         <scene sceneID="kdQ-9j-oRm">
             <objects>
-                <viewController id="x0T-KZ-ax9" customClass="PasswordEntryViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="x0T-KZ-ax9" customClass="ConnectNetworkViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fDO-hK-6Q1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hhx-08-PdB">
-                                <rect key="frame" x="50" y="188" width="314" height="30"/>
+                                <rect key="frame" x="50" y="164" width="500" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
@@ -155,16 +152,16 @@
             </objects>
             <point key="canvasLocation" x="3643" y="-538"/>
         </scene>
-        <!--Wi Fi Set Up Success View Controller-->
+        <!--Wi Fi Connection Success View Controller-->
         <scene sceneID="0nL-rY-9af">
             <objects>
-                <viewController id="UaK-YA-YJk" customClass="WiFiSetUpSuccessViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UaK-YA-YJk" customClass="WiFiConnectionSuccessViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1YJ-0L-4nU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOB-Sb-4XV">
-                                <rect key="frame" x="25" y="448" width="364" height="0.0"/>
+                                <rect key="frame" x="25" y="300" width="550" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

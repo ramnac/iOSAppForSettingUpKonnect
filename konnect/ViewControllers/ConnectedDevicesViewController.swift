@@ -11,7 +11,7 @@ import UIKit
 //ToDo: Need to handle the temporary interruption in this view + if you put the app into background and launch it.
 //basically willresignactive and didenterbackground
 
-class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, AlertDelegate {
+class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate, AlertDelegate {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var scanForWifiNetworksButton: UIButton!
     
@@ -103,7 +103,7 @@ class PeripheralViewController: UIViewController, LoadingIndicatorDelegate, Aler
 
 }
 
-extension PeripheralViewController: BluetoothDelegate {
+extension ConnectedDevicesViewController: BluetoothDelegate {
     func didPeripheralUnreached() {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.peripheralTooFar.rawValue)
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, AlertDelegate {
+class WiFiSetUpViewController: UIViewController, AlertDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,7 @@ class ViewController: UIViewController, AlertDelegate {
     }
 }
 
-extension ViewController: BluetoothDelegate {
+extension WiFiSetUpViewController: BluetoothDelegate {
     func didBluetoothPoweredOn() {
         performSegue(withIdentifier: Constants.Storyboard.peripheralViewController.rawValue, sender: nil)
     }

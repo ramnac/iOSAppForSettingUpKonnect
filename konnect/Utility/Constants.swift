@@ -29,6 +29,14 @@ enum Constants {
         case wifiSetUpSuccess = "The Andersen chargepoint unit is now connected to the local WiFi network"
         case wifiSetUpFailed = "Wifi set up is failed. Might be invalid password"
         
+        enum NavigationTitle: String {
+            case wifiSetUp = "ENTER  WiFi SETUP"
+            case connectedDevices = "CONNECTED DEVICES"
+            case availableNetwork = "AVAILABLE NETWORK"
+            case connectNetwork = "CONNECT NETWORK"
+            case wifiConnectionSuccess = "WiFi CONNECTION SUCCCESS"
+        }
+        
         enum Button: String {
             case scanForWifiNetworks = "SCAN FOR WiFi NETWORKS"
         }

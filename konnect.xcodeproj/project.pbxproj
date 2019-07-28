@@ -8,15 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		210B907022EC7E4000161519 /* AvailableNetworksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210B906F22EC7E4000161519 /* AvailableNetworksTableViewController.swift */; };
-		2163EC1122ECB672003FA9CF /* WiFiSetUpSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2163EC1022ECB672003FA9CF /* WiFiSetUpSuccessViewController.swift */; };
-		21859FDC22EC8AE2004ABC52 /* PasswordEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21859FDB22EC8AE2004ABC52 /* PasswordEntryViewController.swift */; };
+		2163EC1122ECB672003FA9CF /* WiFiConnectionSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2163EC1022ECB672003FA9CF /* WiFiConnectionSuccessViewController.swift */; };
+		21859FDC22EC8AE2004ABC52 /* ConnectNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21859FDB22EC8AE2004ABC52 /* ConnectNetworkViewController.swift */; };
 		21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */; };
 		21CF861722E2C48700A2A9E7 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861622E2C48700A2A9E7 /* AlertDelegate.swift */; };
 		21CF861922E2CB4600A2A9E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861822E2CB4600A2A9E7 /* Constants.swift */; };
 		21CF861B22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861A22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift */; };
-		21CF862222E3326000A2A9E7 /* PeripheralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF862122E3326000A2A9E7 /* PeripheralViewController.swift */; };
+		21CF862222E3326000A2A9E7 /* ConnectedDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF862122E3326000A2A9E7 /* ConnectedDevicesViewController.swift */; };
 		21DB856A22E202CF007EAFBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DB856922E202CF007EAFBD /* AppDelegate.swift */; };
-		21DB856C22E202CF007EAFBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DB856B22E202CF007EAFBD /* ViewController.swift */; };
+		21DB856C22E202CF007EAFBD /* WiFiSetUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DB856B22E202CF007EAFBD /* WiFiSetUpViewController.swift */; };
 		21DB856F22E202CF007EAFBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21DB856D22E202CF007EAFBD /* Main.storyboard */; };
 		21DB857122E202D0007EAFBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21DB857022E202D0007EAFBD /* Assets.xcassets */; };
 		21DB857422E202D0007EAFBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21DB857222E202D0007EAFBD /* LaunchScreen.storyboard */; };
@@ -43,16 +43,16 @@
 
 /* Begin PBXFileReference section */
 		210B906F22EC7E4000161519 /* AvailableNetworksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvailableNetworksTableViewController.swift; path = "../../../../../../../System/Volumes/Data/Users/ram/Downloads/Just Like That/konnect/konnect/ViewControllers/AvailableNetworksTableViewController.swift"; sourceTree = "<group>"; };
-		2163EC1022ECB672003FA9CF /* WiFiSetUpSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WiFiSetUpSuccessViewController.swift; path = "../../../../../../../System/Volumes/Data/Users/ram/Downloads/Just Like That/konnect/konnect/ViewControllers/WiFiSetUpSuccessViewController.swift"; sourceTree = "<group>"; };
-		21859FDB22EC8AE2004ABC52 /* PasswordEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordEntryViewController.swift; path = "../../../../../../../System/Volumes/Data/Users/ram/Downloads/Just Like That/konnect/konnect/ViewControllers/PasswordEntryViewController.swift"; sourceTree = "<group>"; };
+		2163EC1022ECB672003FA9CF /* WiFiConnectionSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WiFiConnectionSuccessViewController.swift; path = "../../../../../../../System/Volumes/Data/Users/ram/Downloads/Just Like That/konnect/konnect/ViewControllers/WiFiConnectionSuccessViewController.swift"; sourceTree = "<group>"; };
+		21859FDB22EC8AE2004ABC52 /* ConnectNetworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectNetworkViewController.swift; path = "../../../../../../../System/Volumes/Data/Users/ram/Downloads/Just Like That/konnect/konnect/ViewControllers/ConnectNetworkViewController.swift"; sourceTree = "<group>"; };
 		21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		21CF861622E2C48700A2A9E7 /* AlertDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
 		21CF861822E2CB4600A2A9E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		21CF861A22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorDelegate.swift; sourceTree = "<group>"; };
-		21CF862122E3326000A2A9E7 /* PeripheralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralViewController.swift; sourceTree = "<group>"; };
+		21CF862122E3326000A2A9E7 /* ConnectedDevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesViewController.swift; sourceTree = "<group>"; };
 		21DB856622E202CF007EAFBD /* konnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = konnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21DB856922E202CF007EAFBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		21DB856B22E202CF007EAFBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		21DB856B22E202CF007EAFBD /* WiFiSetUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiSetUpViewController.swift; sourceTree = "<group>"; };
 		21DB856E22E202CF007EAFBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		21DB857022E202D0007EAFBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21DB857322E202D0007EAFBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -111,10 +111,11 @@
 		21CF861C22E3291F00A2A9E7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				21CF862122E3326000A2A9E7 /* PeripheralViewController.swift */,
+				21CF862122E3326000A2A9E7 /* ConnectedDevicesViewController.swift */,
 				210B906F22EC7E4000161519 /* AvailableNetworksTableViewController.swift */,
-				21859FDB22EC8AE2004ABC52 /* PasswordEntryViewController.swift */,
-				2163EC1022ECB672003FA9CF /* WiFiSetUpSuccessViewController.swift */,
+				21859FDB22EC8AE2004ABC52 /* ConnectNetworkViewController.swift */,
+				2163EC1022ECB672003FA9CF /* WiFiConnectionSuccessViewController.swift */,
+				21DB856B22E202CF007EAFBD /* WiFiSetUpViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -146,7 +147,6 @@
 				21CF861522E2C47400A2A9E7 /* Utility */,
 				21CF860A22E2A76100A2A9E7 /* Bluetooth */,
 				21DB856922E202CF007EAFBD /* AppDelegate.swift */,
-				21DB856B22E202CF007EAFBD /* ViewController.swift */,
 				21DB856D22E202CF007EAFBD /* Main.storyboard */,
 				21DB857022E202D0007EAFBD /* Assets.xcassets */,
 				21DB857222E202D0007EAFBD /* LaunchScreen.storyboard */,
@@ -307,11 +307,11 @@
 				21CF861922E2CB4600A2A9E7 /* Constants.swift in Sources */,
 				21CF861B22E327FB00A2A9E7 /* LoadingIndicatorDelegate.swift in Sources */,
 				210B907022EC7E4000161519 /* AvailableNetworksTableViewController.swift in Sources */,
-				21DB856C22E202CF007EAFBD /* ViewController.swift in Sources */,
-				21859FDC22EC8AE2004ABC52 /* PasswordEntryViewController.swift in Sources */,
-				21CF862222E3326000A2A9E7 /* PeripheralViewController.swift in Sources */,
+				21DB856C22E202CF007EAFBD /* WiFiSetUpViewController.swift in Sources */,
+				21859FDC22EC8AE2004ABC52 /* ConnectNetworkViewController.swift in Sources */,
+				21CF862222E3326000A2A9E7 /* ConnectedDevicesViewController.swift in Sources */,
 				21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */,
-				2163EC1122ECB672003FA9CF /* WiFiSetUpSuccessViewController.swift in Sources */,
+				2163EC1122ECB672003FA9CF /* WiFiConnectionSuccessViewController.swift in Sources */,
 				21CF861722E2C48700A2A9E7 /* AlertDelegate.swift in Sources */,
 				21DB856A22E202CF007EAFBD /* AppDelegate.swift in Sources */,
 			);

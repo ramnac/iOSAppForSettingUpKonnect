@@ -33,7 +33,9 @@ extension LoadingIndicatorDelegate where Self:UIViewController {
     
     func hideLoadingIndicator() {
         DispatchQueue.main.async {
-            UIApplication.shared.endIgnoringInteractionEvents()
+            if UIApplication.shared.isIgnoringInteractionEvents {
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             self.view.viewWithTag(10000)?.removeFromSuperview()
         }
