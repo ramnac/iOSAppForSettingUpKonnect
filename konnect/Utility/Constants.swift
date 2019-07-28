@@ -11,24 +11,30 @@ import Foundation
 enum Constants {
     
     enum UserInterface: String {
-        case bluetoothOffOrUnknown = "Your device's bluetooth is not enabled. Please enable to continue"
         case okActionTitle = "Ok"
-        case peripheralTooFar = "Device is too far, please move closer and try again"
-        case timeoutOccured = "Couldn't find any device, please try again"
+        
         case scanning = "Scanning for device"
         case connecting = "Connecting to device"
         case connected = "Connected to device"
+        
+        //Yet to get the message
         case searchingWiFi = "Searching WiFi Networks"
+        
+        case bluetoothOffOrUnknown = "Your device's bluetooth is not enabled. Please enable to continue"
+        case peripheralTooFar = "Device is too far, please move closer and try again"
+        case timeoutOccured = "Couldn't find any device, please try again"
         case invalidPeripheralConnected = "Device isn't recognised, please try again"
-        case failToConnectPeripheral = "Couldn't connect to peripheral - some weird issue"
-        case failToDiscoverPeripheralServices = "failed to discover peripheral services"
-        case failToDiscoverCharacteristics = "failed to discover characteristics"
-        case failToUpdateNotificationState = "failed to update Notification state"
-        case failToUpdateValueForCharacteristic = "failed to update value for characteristic"
+        
+        case failToDiscoverPeripheralServices, failToDiscoverCharacteristics, failToUpdateNotificationState, failToUpdateValueForCharacteristic = "There was an issue connecting to your Andersen, please try again or contact support"
+        
+        //Yet to get the message
+        case failToConnectPeripheral = "Fail to connect peripheral"
         case failToFindConnectedPeripheral = "Failed to find connected peripheral. Oops!"
-        case noWiFiNetworksFound = "No wifi network available"
+        
+        case noWiFiNetworksFound = "Unable to find WiFi, make sure your WiFi is on and in range"
+        case wifiSetUpFailed = "Unable to connect to WiFi, make sure credentials are correct"
+        
         case wifiSetUpSuccess = "The Andersen chargepoint unit is now connected to the local WiFi network"
-        case wifiSetUpFailed = "Wifi set up is failed. Might be invalid password"
         
         enum NavigationTitle: String {
             case wifiSetUp = "ENTER  WiFi SETUP"
