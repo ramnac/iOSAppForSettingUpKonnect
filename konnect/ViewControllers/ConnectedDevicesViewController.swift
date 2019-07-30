@@ -133,19 +133,19 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
     }
     
     func didFailToDiscoverPeripheralServices() {
-        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToDiscoverPeripheralServices.rawValue)
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
     }
     
     func didFailToDiscoverCharacteristics() {
-        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToDiscoverCharacteristics.rawValue)
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
     }
     
     func didFailToUpdateNotificationState() {
-        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToUpdateNotificationState.rawValue)
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
     }
     
     func didFailToUpdateValueForCharacteristic() {
-        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToUpdateValueForCharacteristic.rawValue)
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
     }
     
     func didFailedToFindConnectedPeripheral() {

@@ -25,7 +25,7 @@ enum Constants {
         case timeoutOccured = "Couldn't find any device, please try again"
         case invalidPeripheralConnected = "Device isn't recognised, please try again"
         
-        case failToDiscoverPeripheralServices, failToDiscoverCharacteristics, failToUpdateNotificationState, failToUpdateValueForCharacteristic = "There was an issue connecting to your Andersen, please try again or contact support"
+        case generalBluetoothError = "There was an issue connecting to your Andersen, please try again or contact support"
         
         //Yet to get the message
         case failToConnectPeripheral = "Fail to connect peripheral"
