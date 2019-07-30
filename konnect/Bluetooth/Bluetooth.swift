@@ -32,11 +32,11 @@ protocol BluetoothDelegate: class {
     func didPeripheralDiscovered()
     func didPeripheralConnected()
     func didConnectedToInvalidPeripheral()
-    func didFailedToConnectPeripheral()
-    func didFailToDiscoverPeripheralServices()
-    func didFailToDiscoverCharacteristics()
-    func didFailToUpdateNotificationState()
-    func didFailToUpdateValueForCharacteristic()
+    func didFailedToConnectPeripheral(error: Error?)
+    func didFailToDiscoverPeripheralServices(error: Error?)
+    func didFailToDiscoverCharacteristics(error: Error?)
+    func didFailToUpdateNotificationState(error: Error?)
+    func didFailToUpdateValueForCharacteristic(error: Error?)
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String])
     func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any])
     func didFailedToFindConnectedPeripheral()
@@ -48,11 +48,11 @@ extension BluetoothDelegate {
     func didPeripheralDiscovered() {}
     func didPeripheralConnected() {}
     func didConnectedToInvalidPeripheral() {}
-    func didFailedToConnectPeripheral() {}
-    func didFailToDiscoverPeripheralServices() {}
-    func didFailToDiscoverCharacteristics() {}
-    func didFailToUpdateNotificationState() {}
-    func didFailToUpdateValueForCharacteristic() {}
+    func didFailedToConnectPeripheral(error: Error?) {}
+    func didFailToDiscoverPeripheralServices(error: Error?) {}
+    func didFailToDiscoverCharacteristics(error: Error?) {}
+    func didFailToUpdateNotificationState(error: Error?) {}
+    func didFailToUpdateValueForCharacteristic(error: Error?) {}
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String]) {}
     func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any]) {}
     func didFailedToFindConnectedPeripheral() {}
@@ -184,7 +184,7 @@ extension Bluetooth: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        delegate?.didFailedToConnectPeripheral()
+        delegate?.didFailedToConnectPeripheral(error: error)
         resetBluetooth()
     }
     
@@ -197,7 +197,7 @@ extension Bluetooth: CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let _ = error {
-            delegate?.didFailToDiscoverPeripheralServices()
+            delegate?.didFailToDiscoverPeripheralServices(error: error)
             resetBluetooth()
             return
         }
@@ -210,13 +210,13 @@ extension Bluetooth: CBPeripheralDelegate {
                 }
             }
         }
-        delegate?.didFailToDiscoverPeripheralServices()
+        delegate?.didFailToDiscoverPeripheralServices(error: error)
         resetBluetooth()
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let _ = error {
-            delegate?.didFailToDiscoverCharacteristics()
+            delegate?.didFailToDiscoverCharacteristics(error: error)
             resetBluetooth()
             return
         }
@@ -258,14 +258,14 @@ extension Bluetooth: CBPeripheralDelegate {
                 //No need to handle this as this will never happen
             }
         } else {
-            delegate?.didFailToDiscoverCharacteristics()
+            delegate?.didFailToDiscoverCharacteristics(error: error)
             resetBluetooth()
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if error != nil || !characteristic.isNotifying {
-            delegate?.didFailToUpdateNotificationState()
+            delegate?.didFailToUpdateNotificationState(error: error)
             resetBluetooth()
             return
         }
@@ -274,7 +274,7 @@ extension Bluetooth: CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let _ = error {
-            delegate?.didFailToUpdateValueForCharacteristic()
+            delegate?.didFailToUpdateValueForCharacteristic(error: error)
             resetBluetooth()
             return
         }
@@ -298,7 +298,7 @@ extension Bluetooth: CBPeripheralDelegate {
                 //No need to handle this as this will never happen
             }
         }
-        delegate?.didFailToUpdateValueForCharacteristic()
+        delegate?.didFailToUpdateValueForCharacteristic(error: error)
         resetBluetooth()
     }
     

@@ -128,23 +128,23 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.invalidPeripheralConnected.rawValue)
     }
     
-    func didFailedToConnectPeripheral() {
-        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToConnectPeripheral.rawValue)
+    func didFailedToConnectPeripheral(error: Error?) {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.failToConnectPeripheral.rawValue, error: error)
     }
     
-    func didFailToDiscoverPeripheralServices() {
+    func didFailToDiscoverPeripheralServices(error: Error?) {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue, error: error)
+    }
+    
+    func didFailToDiscoverCharacteristics(error: Error?) {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
     }
     
-    func didFailToDiscoverCharacteristics() {
+    func didFailToUpdateNotificationState(error: Error?) {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
     }
     
-    func didFailToUpdateNotificationState() {
-        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
-    }
-    
-    func didFailToUpdateValueForCharacteristic() {
+    func didFailToUpdateValueForCharacteristic(error: Error?) {
         handleExceptionWithAnAlertMessage(message: Constants.UserInterface.generalBluetoothError.rawValue)
     }
     
@@ -165,10 +165,14 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
         performSegue(withIdentifier: Constants.Storyboard.availableNetworksTableViewController.rawValue, sender: nil)
     }
     
-    private func handleExceptionWithAnAlertMessage(message: String) {
+    private func handleExceptionWithAnAlertMessage(message: String, error: Error? = nil) {
         clearBluetoothDelegate()
         doResetStatusLabelAndHideLoadingIndicator()
-        showAlert(message: message, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
+        var errorMessage = message
+        if let _ = error {
+            errorMessage = errorMessage + " " + error!.localizedDescription
+        }
+        showAlert(message: errorMessage, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
             self?.navigationController?.popToRootViewController(animated: true)
         }
     }
