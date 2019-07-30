@@ -151,6 +151,7 @@ extension Bluetooth: CBCentralManagerDelegate {
         if central.state == .poweredOn {
             state = .on
             delegate?.didBluetoothPoweredOn()
+            resetBluetooth()
         } else {
             state = .offOrUnknown
             delegate?.didBluetoothOffOrUnknown()
@@ -161,8 +162,8 @@ extension Bluetooth: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         coreBluetoothManager.stopScan()
         if RSSI.int32Value < Int32(Constants.Bluetooth.Numbers.rssiMinimumStrength.rawValue) {
-            cancelTimeoutWorkItem()
             delegate?.didPeripheralUnreached()
+            resetBluetooth()
             return
         }
         restartTimeoutWorkItem()
@@ -174,8 +175,8 @@ extension Bluetooth: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         guard let peripheralName = peripheral.name, peripheralName.hasPrefix(Constants.Bluetooth.deviceNamePrefix.rawValue) else {
             coreBluetoothManager.cancelPeripheralConnection(peripheral)
-            cancelTimeoutWorkItem()
             delegate?.didConnectedToInvalidPeripheral()
+            resetBluetooth()
             return
         }
         cancelTimeoutWorkItem()
@@ -183,8 +184,8 @@ extension Bluetooth: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        cancelTimeoutWorkItem()
         delegate?.didFailedToConnectPeripheral()
+        resetBluetooth()
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
@@ -196,8 +197,8 @@ extension Bluetooth: CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let _ = error {
-            cancelTimeoutWorkItem()
             delegate?.didFailToDiscoverPeripheralServices()
+            resetBluetooth()
             return
         }
         if let peripheralServices = peripheral.services {
@@ -209,14 +210,14 @@ extension Bluetooth: CBPeripheralDelegate {
                 }
             }
         }
-        cancelTimeoutWorkItem()
         delegate?.didFailToDiscoverPeripheralServices()
+        resetBluetooth()
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let _ = error {
-            cancelTimeoutWorkItem()
             delegate?.didFailToDiscoverCharacteristics()
+            resetBluetooth()
             return
         }
         var txCharacteristic: CBCharacteristic?
@@ -257,15 +258,15 @@ extension Bluetooth: CBPeripheralDelegate {
                 //No need to handle this as this will never happen
             }
         } else {
-            cancelTimeoutWorkItem()
             delegate?.didFailToDiscoverCharacteristics()
+            resetBluetooth()
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if error != nil || !characteristic.isNotifying {
-            cancelTimeoutWorkItem()
             delegate?.didFailToUpdateNotificationState()
+            resetBluetooth()
             return
         }
         restartTimeoutWorkItem()
@@ -273,8 +274,8 @@ extension Bluetooth: CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let _ = error {
-            cancelTimeoutWorkItem()
             delegate?.didFailToUpdateValueForCharacteristic()
+            resetBluetooth()
             return
         }
         
@@ -297,8 +298,8 @@ extension Bluetooth: CBPeripheralDelegate {
                 //No need to handle this as this will never happen
             }
         }
-        cancelTimeoutWorkItem()
         delegate?.didFailToUpdateValueForCharacteristic()
+        resetBluetooth()
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
