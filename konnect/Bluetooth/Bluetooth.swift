@@ -103,7 +103,11 @@ class Bluetooth: NSObject {
     }
     
     @objc private func resetBluetooth() {
-        peripheralToConnect = nil
+        if let peripheral = peripheralToConnect {
+            coreBluetoothManager.cancelPeripheralConnection(peripheral)
+            peripheral.delegate = nil
+            peripheralToConnect = nil
+        }
         if state == .on {
             coreBluetoothManager.stopScan()
         }
