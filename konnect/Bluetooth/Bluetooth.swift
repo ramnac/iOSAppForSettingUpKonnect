@@ -295,8 +295,8 @@ extension Bluetooth: CBPeripheralDelegate {
             } else if operation == .validateWiFiPassword {
                 if let wifiPasswordUpdateResponse = try? JSONSerialization.jsonObject(with: characteristicValue, options: []) as? [String: Any] {
                     print(wifiPasswordUpdateResponse)
-                    cancelTimeoutWorkItem()
                     delegate?.didUpdateValueForWiFiPassword(with: wifiPasswordUpdateResponse)
+                    resetBluetooth()
                     return
                 }
             } else {

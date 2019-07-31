@@ -57,7 +57,7 @@ extension ConnectNetworkViewController: BluetoothDelegate {
                 performSegue(withIdentifier: Constants.Storyboard.wifiConnectionSuccessViewController.rawValue, sender: nil)
             } else if wifiSetUpResponse == Constants.Bluetooth.wifiSetUpFailure.rawValue {
                 showAlert(message: Constants.UserInterface.wifiSetUpFailed.rawValue, primaryActionTitle: Constants.UserInterface.okActionTitle.rawValue) { [weak self] in
-                    self?.passwordTextField.becomeFirstResponder()
+                    self?.navigationController?.popToRootViewController(animated: true)
                 }
             }
         }
