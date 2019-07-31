@@ -60,6 +60,7 @@ enum Constants {
     
     enum Bluetooth: String {
         case serviceUUID = "6FA90001-5C4E-48A8-94F4-8030546F36FC"
+        case includedServiceUUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
         case rxCharacterisiticUUID = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
         case txCharacterisiticUUID = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
         case deviceNamePrefix = "Argon-"

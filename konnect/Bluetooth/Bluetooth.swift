@@ -71,6 +71,7 @@ class Bluetooth: NSObject {
     private let argonServiceUUID = CBUUID(string: Constants.Bluetooth.serviceUUID.rawValue)
     private let rxCharacteristicUUID = CBUUID(string: Constants.Bluetooth.rxCharacterisiticUUID.rawValue)
     private let txCharacteristicUUID = CBUUID(string: Constants.Bluetooth.txCharacterisiticUUID.rawValue)
+    private let includedServiceUUID = CBUUID(string: Constants.Bluetooth.includedServiceUUID.rawValue)
     
     private var peripheralToConnect: CBPeripheral?
     
@@ -127,7 +128,7 @@ class Bluetooth: NSObject {
         restartTimeoutWorkItem()
         operation = bluetoothOperation
         peripheralToConnect.delegate = self
-        peripheralToConnect.discoverServices([argonServiceUUID])
+        peripheralToConnect.discoverServices([includedServiceUUID])
     }
     
     func validateWiFiPassword(password: String, forSSID name: String) {
@@ -207,7 +208,7 @@ extension Bluetooth: CBPeripheralDelegate {
         }
         if let peripheralServices = peripheral.services {
             for service in peripheralServices {
-                if service.uuid.isEqual(argonServiceUUID) {
+                if service.uuid.isEqual(includedServiceUUID) {
                     restartTimeoutWorkItem()
                     peripheral.discoverCharacteristics([rxCharacteristicUUID,txCharacteristicUUID], for: service)
                     return
@@ -226,7 +227,7 @@ extension Bluetooth: CBPeripheralDelegate {
         }
         var txCharacteristic: CBCharacteristic?
         var rxCharacteristic: CBCharacteristic?
-        if service.uuid.isEqual(argonServiceUUID) {
+        if service.uuid.isEqual(includedServiceUUID) {
             if let serviceCharacteristics = service.characteristics {
                 for characteristic in serviceCharacteristics {
                     if characteristic.uuid.isEqual(txCharacteristicUUID) {
