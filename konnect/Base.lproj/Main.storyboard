@@ -6,9 +6,51 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Network Set Up View Controller-->
+        <scene sceneID="Bmd-Vq-xQg">
+            <objects>
+                <viewController id="FN9-c2-hmQ" customClass="NetworkSetUpViewController" customModule="konnect" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iHA-hF-IHz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tpr-R8-5KS">
+                                <rect key="frame" x="10" y="188" width="394" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWB-H6-Eid">
+                                <rect key="frame" x="192" y="732" width="30" height="30"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="7El-Di-zGV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Tpr-R8-5KS" firstAttribute="top" secondItem="iSC-F2-4Lk" secondAttribute="top" constant="100" id="0ao-s8-0ja"/>
+                            <constraint firstItem="Tpr-R8-5KS" firstAttribute="leading" secondItem="iSC-F2-4Lk" secondAttribute="leading" constant="10" id="PLQ-9h-ixF"/>
+                            <constraint firstItem="hWB-H6-Eid" firstAttribute="centerX" secondItem="iHA-hF-IHz" secondAttribute="centerX" id="XM0-0l-bFj"/>
+                            <constraint firstItem="iSC-F2-4Lk" firstAttribute="trailing" secondItem="Tpr-R8-5KS" secondAttribute="trailing" constant="10" id="lmw-B1-KiF"/>
+                            <constraint firstItem="iSC-F2-4Lk" firstAttribute="bottom" secondItem="hWB-H6-Eid" secondAttribute="bottom" constant="100" id="rxN-8A-u94"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iSC-F2-4Lk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6Tv-kZ-ZTp"/>
+                    <connections>
+                        <outlet property="networkSetUpLabel" destination="Tpr-R8-5KS" id="QQn-2E-mDh"/>
+                        <outlet property="startButton" destination="hWB-H6-Eid" id="3Aj-MW-gum"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="00j-7a-PZu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="110" y="-538"/>
+        </scene>
         <!--Wi Fi Set Up View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -23,10 +65,31 @@
                                     <action selector="scanBluetoothButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VcI-2L-sOO"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HCa-F6-5mO">
+                                <rect key="frame" x="10" y="188" width="394" height="58"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4E-Dx-4Kq">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3U-Wb-v5y">
+                                        <rect key="frame" x="0.0" y="58" width="394" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HCa-F6-5mO" secondAttribute="trailing" constant="10" id="15Q-MZ-xtm"/>
+                            <constraint firstItem="HCa-F6-5mO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="8mF-zf-5EX"/>
                             <constraint firstItem="RGO-2B-dqg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Je-SG-myX"/>
+                            <constraint firstItem="HCa-F6-5mO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Khv-5y-9M9"/>
+                            <constraint firstItem="HCa-F6-5mO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ei3-TZ-UbH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="RGO-2B-dqg" secondAttribute="bottom" constant="100" id="lBL-jY-sTB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -34,6 +97,8 @@
                     <navigationItem key="navigationItem" id="Hy2-QE-EYa"/>
                     <connections>
                         <outlet property="continueButton" destination="RGO-2B-dqg" id="wwg-Ha-Ii1"/>
+                        <outlet property="wifiSetUpDescriptionLabel" destination="s3U-Wb-v5y" id="eJy-Rc-Yyz"/>
+                        <outlet property="wifiSetUpTitleLabel" destination="L4E-Dx-4Kq" id="aw9-bJ-gcs"/>
                         <segue destination="hhs-O9-XzV" kind="show" identifier="connectedDevicesViewController" id="2M1-5M-Nx2"/>
                     </connections>
                 </viewController>
@@ -129,32 +194,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hhx-08-PdB">
-                                <rect key="frame" x="50" y="188" width="314" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
-                                <connections>
-                                    <action selector="doneButtonTapped:" destination="x0T-KZ-ax9" eventType="primaryActionTriggered" id="1ig-Kp-Vqx"/>
-                                </connections>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gLS-9I-lLV">
+                                <rect key="frame" x="20" y="188" width="374" height="88"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sp-hJ-oec">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hhx-08-PdB">
+                                        <rect key="frame" x="0.0" y="58" width="374" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                        <connections>
+                                            <action selector="doneButtonTapped:" destination="x0T-KZ-ax9" eventType="primaryActionTriggered" id="1ig-Kp-Vqx"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hhx-08-PdB" firstAttribute="leading" secondItem="FpJ-Wk-WWt" secondAttribute="leading" constant="50" id="7S6-ke-AN8"/>
-                            <constraint firstItem="FpJ-Wk-WWt" firstAttribute="trailing" secondItem="hhx-08-PdB" secondAttribute="trailing" constant="50" id="rfH-fG-2ZP"/>
-                            <constraint firstItem="hhx-08-PdB" firstAttribute="top" secondItem="FpJ-Wk-WWt" secondAttribute="top" constant="100" id="xeJ-lc-mcv"/>
+                            <constraint firstItem="gLS-9I-lLV" firstAttribute="top" secondItem="FpJ-Wk-WWt" secondAttribute="top" constant="100" id="XpX-hc-9MP"/>
+                            <constraint firstItem="FpJ-Wk-WWt" firstAttribute="trailing" secondItem="gLS-9I-lLV" secondAttribute="trailing" constant="20" id="ZzJ-Fg-3rP"/>
+                            <constraint firstItem="gLS-9I-lLV" firstAttribute="leading" secondItem="FpJ-Wk-WWt" secondAttribute="leading" constant="20" id="dxE-LG-MBQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FpJ-Wk-WWt"/>
                     </view>
                     <connections>
+                        <outlet property="networkNameLabel" destination="7sp-hJ-oec" id="uVW-hy-Q5t"/>
                         <outlet property="passwordTextField" destination="hhx-08-PdB" id="u5L-Ty-Icf"/>
                         <segue destination="UaK-YA-YJk" kind="show" identifier="wifiConnectionSuccessViewController" id="ggL-ov-g0B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Asl-Nh-zNB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3643" y="-538"/>
+            <point key="canvasLocation" x="3642.0289855072465" y="-538.39285714285711"/>
         </scene>
         <!--Wi Fi Connection Success View Controller-->
         <scene sceneID="0nL-rY-9af">
@@ -164,28 +241,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOB-Sb-4XV">
-                                <rect key="frame" x="25" y="448" width="364" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="L4j-pd-Neh">
+                                <rect key="frame" x="20" y="419" width="374" height="58"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ru8-yM-54f">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lnp-3o-eYo">
+                                        <rect key="frame" x="0.0" y="58" width="374" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="rOB-Sb-4XV" secondAttribute="trailing" constant="25" id="GmE-MA-LfC"/>
-                            <constraint firstItem="rOB-Sb-4XV" firstAttribute="centerY" secondItem="1YJ-0L-4nU" secondAttribute="centerY" id="RQS-RK-cRh"/>
-                            <constraint firstItem="rOB-Sb-4XV" firstAttribute="leading" secondItem="1YJ-0L-4nU" secondAttribute="leading" constant="25" id="yAh-2M-LNe"/>
+                            <constraint firstItem="7c3-wP-ZVM" firstAttribute="trailing" secondItem="L4j-pd-Neh" secondAttribute="trailing" constant="20" id="16q-Wa-u00"/>
+                            <constraint firstItem="L4j-pd-Neh" firstAttribute="leading" secondItem="7c3-wP-ZVM" secondAttribute="leading" constant="20" id="Btc-1s-qg7"/>
+                            <constraint firstItem="L4j-pd-Neh" firstAttribute="centerY" secondItem="1YJ-0L-4nU" secondAttribute="centerY" id="y90-98-rly"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7c3-wP-ZVM"/>
                     </view>
+                    <navigationItem key="navigationItem" id="FZZ-cS-M5A"/>
                     <connections>
-                        <outlet property="wifiSetUpSuccessLabel" destination="rOB-Sb-4XV" id="HWL-uz-eOm"/>
+                        <outlet property="successDescriptionLabel" destination="Lnp-3o-eYo" id="pE9-SQ-Wvl"/>
+                        <outlet property="successTitleLabel" destination="ru8-yM-54f" id="Utm-Nl-nwD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DJB-cM-6x9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4529" y="-538"/>
+            <point key="canvasLocation" x="4528.985507246377" y="-538.39285714285711"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KVv-oy-Na5">
@@ -198,12 +288,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Ks8-UG-5uG"/>
+                        <segue destination="FN9-c2-hmQ" kind="relationship" relationship="rootViewController" id="j1T-Mj-OIc"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ver-Qd-LSc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="134.78260869565219" y="-538.39285714285711"/>
+            <point key="canvasLocation" x="-745" y="-538"/>
         </scene>
     </scenes>
 </document>

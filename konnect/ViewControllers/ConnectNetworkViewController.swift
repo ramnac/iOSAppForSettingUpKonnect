@@ -10,6 +10,7 @@ import UIKit
 
 class ConnectNetworkViewController: UIViewController, LoadingIndicatorDelegate, AlertDelegate {
     
+    @IBOutlet weak var networkNameLabel: UILabel!
     @IBOutlet weak var passwordTextField: UITextField!
     
     var ssidName: String!
@@ -21,6 +22,7 @@ class ConnectNetworkViewController: UIViewController, LoadingIndicatorDelegate, 
     
     private func customiseUserInterface() {
         navigationItem.title = Constants.UserInterface.NavigationTitle.connectNetwork.rawValue
+        networkNameLabel.text = ssidName
     }
     
     override func viewWillAppear(_ animated: Bool) {

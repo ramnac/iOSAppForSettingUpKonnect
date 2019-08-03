@@ -10,7 +10,8 @@ import UIKit
 
 class WiFiConnectionSuccessViewController: UIViewController {
 
-    @IBOutlet weak var wifiSetUpSuccessLabel: UILabel!
+    @IBOutlet weak var successTitleLabel: UILabel!
+    @IBOutlet weak var successDescriptionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +21,9 @@ class WiFiConnectionSuccessViewController: UIViewController {
     
     private func customiseUserInterface() {
         navigationItem.title = Constants.UserInterface.NavigationTitle.wifiConnectionSuccess.rawValue
-        wifiSetUpSuccessLabel.text = Constants.UserInterface.wifiSetUpSuccess.rawValue
+        successTitleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+        successTitleLabel.text = Constants.UserInterface.Label.wifiConnectionSuccessTitle.rawValue
+        successDescriptionLabel.text = Constants.UserInterface.Label.wifiConnectionSuccessDescription.rawValue
         navigationItem.hidesBackButton = true
     }
 

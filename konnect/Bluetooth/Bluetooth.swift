@@ -30,7 +30,7 @@ protocol BluetoothDelegate: class {
     func didBluetoothOffOrUnknown()
     
     func didPeripheralDiscovered()
-    func didPeripheralConnected()
+    func didPeripheralConnected(deviceName: String)
     func didConnectedToInvalidPeripheral()
     func didFailedToConnectPeripheral(error: Error?)
     func didFailToDiscoverPeripheralServices(error: Error?)
@@ -46,7 +46,7 @@ extension BluetoothDelegate {
     func didBluetoothPoweredOn() {}
     func didPeripheralUnreached() {}
     func didPeripheralDiscovered() {}
-    func didPeripheralConnected() {}
+    func didPeripheralConnected(deviceName: String) {}
     func didConnectedToInvalidPeripheral() {}
     func didFailedToConnectPeripheral(error: Error?) {}
     func didFailToDiscoverPeripheralServices(error: Error?) {}
@@ -185,7 +185,7 @@ extension Bluetooth: CBCentralManagerDelegate {
             return
         }
         cancelTimeoutWorkItem()
-        delegate?.didPeripheralConnected()
+        delegate?.didPeripheralConnected(deviceName: peripheralName)
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -287,14 +287,12 @@ extension Bluetooth: CBPeripheralDelegate {
         if let characteristicValue = characteristic.value {
             if operation == .searchWiFi {
                 if let wifiNetworksArray = try? JSONSerialization.jsonObject(with: characteristicValue, options: []) as? [String] {
-                    print(wifiNetworksArray)
                     cancelTimeoutWorkItem()
                     delegate?.didUpdateValueForWiFiNetworks(with: wifiNetworksArray)
                     return
                 }
             } else if operation == .validateWiFiPassword {
                 if let wifiPasswordUpdateResponse = try? JSONSerialization.jsonObject(with: characteristicValue, options: []) as? [String: Any] {
-                    print(wifiPasswordUpdateResponse)
                     delegate?.didUpdateValueForWiFiPassword(with: wifiPasswordUpdateResponse)
                     resetBluetooth()
                     return

@@ -15,10 +15,7 @@ enum Constants {
         
         case scanning = "Scanning for device"
         case connecting = "Connecting to device"
-        case connected = "Connected to device"
-        
-        //Yet to get the message
-        case searchingWiFi = "Searching WiFi Networks"
+        case connected = "Connected to %@"
         
         case bluetoothOffOrUnknown = "Your device's bluetooth is not enabled. Please enable to continue"
         case peripheralTooFar = "Device is too far, please move closer and try again"
@@ -34,19 +31,27 @@ enum Constants {
         case noWiFiNetworksFound = "Unable to find WiFi, make sure your WiFi is on and in range"
         case wifiSetUpFailed = "Unable to connect to WiFi, make sure credentials are correct"
         
-        case wifiSetUpSuccess = "The Andersen chargepoint unit is now connected to the local WiFi network"
-        
         enum NavigationTitle: String {
-            case wifiSetUp = "ENTER  WiFi SETUP"
-            case connectedDevices = "CONNECTED DEVICES"
-            case availableNetwork = "AVAILABLE NETWORK"
-            case connectNetwork = "CONNECT NETWORK"
-            case wifiConnectionSuccess = "WiFi CONNECTION SUCCCESS"
+            case networkSetUp = "Network Setup"
+            case wifiSetUp = "Enter WiFi Setup"
+            case connectedDevices = "Connected Devices"
+            case availableNetwork = "Available Network"
+            case connectNetwork = "Connect Network"
+            case wifiConnectionSuccess = "WiFi Connection Success"
         }
         
         enum Button: String {
+            case start = "LET'S START"
             case wifiSetUp = "CONTINUE"
             case scanForWifiNetworks = "SCAN FOR WiFi NETWORKS"
+        }
+        
+        enum Label: String {
+            case networkSetUp = "Connect a Andersen chargepoint to the Konnect Cloud service"
+            case wifiSetUpTitle = "Enter Setup Mode"
+            case wifiSetUpDescription = "Press multi function setup button for 5 secs until status LED shows solid amber"
+            case wifiConnectionSuccessTitle = "Connection Success"
+            case wifiConnectionSuccessDescription = "The Andersen chargepoint unit is now connected to the local WiFi network"
         }
     }
     

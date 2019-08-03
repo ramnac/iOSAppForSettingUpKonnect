@@ -11,6 +11,8 @@ import UIKit
 class WiFiSetUpViewController: UIViewController, AlertDelegate {
 
     @IBOutlet weak var continueButton: UIButton!
+    @IBOutlet weak var wifiSetUpDescriptionLabel: UILabel!
+    @IBOutlet weak var wifiSetUpTitleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +21,16 @@ class WiFiSetUpViewController: UIViewController, AlertDelegate {
     }
     
     private func customiseUserInterface() {
-        //navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = Constants.UserInterface.NavigationTitle.wifiSetUp.rawValue
         continueButton.setTitle(Constants.UserInterface.Button.wifiSetUp.rawValue, for: .normal)
+        wifiSetUpTitleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+        wifiSetUpTitleLabel.text = Constants.UserInterface.Label.wifiSetUpTitle.rawValue
+        wifiSetUpDescriptionLabel.text = Constants.UserInterface.Label.wifiSetUpDescription.rawValue
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     @IBAction func scanBluetoothButtonTapped(_ sender: Any) {

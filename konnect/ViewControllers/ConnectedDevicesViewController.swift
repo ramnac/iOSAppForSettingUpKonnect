@@ -73,7 +73,6 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     
     @IBAction func scanForWiFiNetworksButtonTapped(_ sender: Any) {
         Bluetooth.shared.delegate = self
-        statusLabel.text = Constants.UserInterface.searchingWiFi.rawValue
         showLoadingIndicator(withNetworkActivityIndicatorVisible: false)
         Bluetooth.shared.performOperation(bluetoothOperation: .searchWiFi)
     }
@@ -117,8 +116,8 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
         statusLabel.text = Constants.UserInterface.connecting.rawValue
     }
     
-    func didPeripheralConnected() {
-        statusLabel.text = Constants.UserInterface.connected.rawValue
+    func didPeripheralConnected(deviceName: String) {
+        statusLabel.text = String(format: Constants.UserInterface.connected.rawValue, deviceName)
         hideLoadingIndicator()
         clearBluetoothDelegate()
         showScanForWifiNetworksButton()
@@ -159,7 +158,7 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
             handleExceptionWithAnAlertMessage(message: Constants.UserInterface.noWiFiNetworksFound.rawValue)
             return
         }
-        doResetStatusLabelAndHideLoadingIndicator()
+        hideLoadingIndicator()
         clearBluetoothDelegate()
         wifiNetworks = wifiNetworksArrayCopy
         performSegue(withIdentifier: Constants.Storyboard.availableNetworksTableViewController.rawValue, sender: nil)
@@ -168,6 +167,7 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
     private func handleExceptionWithAnAlertMessage(message: String, error: Error? = nil) {
         clearBluetoothDelegate()
         doResetStatusLabelAndHideLoadingIndicator()
+        hideScanForWifiNetworksButton()
         var errorMessage = message
         if let _ = error {
             errorMessage = errorMessage + " " + error!.localizedDescription
