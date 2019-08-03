@@ -38,6 +38,7 @@ protocol BluetoothDelegate: class {
     func didFailToUpdateNotificationState(error: Error?)
     func didFailToUpdateValueForCharacteristic(error: Error?)
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String])
+    func didFailToDiscoverWiFiNetworks()
     func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any])
     func didFailedToFindConnectedPeripheral()
 }
@@ -53,6 +54,7 @@ extension BluetoothDelegate {
     func didFailToDiscoverCharacteristics(error: Error?) {}
     func didFailToUpdateNotificationState(error: Error?) {}
     func didFailToUpdateValueForCharacteristic(error: Error?) {}
+    func didFailToDiscoverWiFiNetworks() {}
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray:[String]) {}
     func didUpdateValueForWiFiPassword(with jsonResponse:[String: Any]) {}
     func didFailedToFindConnectedPeripheral() {}
@@ -105,7 +107,9 @@ class Bluetooth: NSObject {
     
     @objc private func resetBluetooth() {
         if let peripheral = peripheralToConnect {
-            coreBluetoothManager.cancelPeripheralConnection(peripheral)
+            if state == .on {
+                coreBluetoothManager.cancelPeripheralConnection(peripheral)
+            }
             peripheral.delegate = nil
             peripheralToConnect = nil
         }
@@ -287,8 +291,14 @@ extension Bluetooth: CBPeripheralDelegate {
         if let characteristicValue = characteristic.value {
             if operation == .searchWiFi {
                 if let wifiNetworksArray = try? JSONSerialization.jsonObject(with: characteristicValue, options: []) as? [String] {
+                    let wifiNetworksArrayCopy = wifiNetworksArray.filter({ $0 != ""})
+                    if wifiNetworksArrayCopy.count == 0 {
+                        delegate?.didFailToDiscoverWiFiNetworks()
+                        resetBluetooth()
+                        return
+                    }
                     cancelTimeoutWorkItem()
-                    delegate?.didUpdateValueForWiFiNetworks(with: wifiNetworksArray)
+                    delegate?.didUpdateValueForWiFiNetworks(with: wifiNetworksArrayCopy)
                     return
                 }
             } else if operation == .validateWiFiPassword {

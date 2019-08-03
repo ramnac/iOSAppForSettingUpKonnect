@@ -152,16 +152,14 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
     }
     
     func didUpdateValueForWiFiNetworks(with wifiNetworksArray: [String]) {
-        var wifiNetworksArrayCopy = wifiNetworksArray
-        wifiNetworksArrayCopy = wifiNetworksArrayCopy.filter({ $0 != ""})
-        if wifiNetworksArrayCopy.count == 0 {
-            handleExceptionWithAnAlertMessage(message: Constants.UserInterface.noWiFiNetworksFound.rawValue)
-            return
-        }
         hideLoadingIndicator()
         clearBluetoothDelegate()
-        wifiNetworks = wifiNetworksArrayCopy
+        wifiNetworks = wifiNetworksArray
         performSegue(withIdentifier: Constants.Storyboard.availableNetworksTableViewController.rawValue, sender: nil)
+    }
+    
+    func didFailToDiscoverWiFiNetworks() {
+        handleExceptionWithAnAlertMessage(message: Constants.UserInterface.noWiFiNetworksFound.rawValue)
     }
     
     private func handleExceptionWithAnAlertMessage(message: String, error: Error? = nil) {
