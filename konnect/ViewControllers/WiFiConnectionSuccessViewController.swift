@@ -12,6 +12,7 @@ class WiFiConnectionSuccessViewController: UIViewController {
 
     @IBOutlet weak var successTitleLabel: UILabel!
     @IBOutlet weak var successDescriptionLabel: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,11 @@ class WiFiConnectionSuccessViewController: UIViewController {
         successTitleLabel.text = Constants.UserInterface.Label.wifiConnectionSuccessTitle.rawValue
         successDescriptionLabel.text = Constants.UserInterface.Label.wifiConnectionSuccessDescription.rawValue
         navigationItem.hidesBackButton = true
+        
+        doneButton.setTitle(Constants.UserInterface.Button.done.rawValue, for: .normal)
     }
 
+    @IBAction func doneButtonTapped(_ sender: Any) {
+        navigationController?.popToRootViewController(animated: false)
+    }
 }

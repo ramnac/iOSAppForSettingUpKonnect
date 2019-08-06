@@ -258,17 +258,26 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0Q-fk-hji">
+                                <rect key="frame" x="192" y="732" width="30" height="30"/>
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="UaK-YA-YJk" eventType="touchUpInside" id="8Q3-I4-g2H"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7c3-wP-ZVM" firstAttribute="trailing" secondItem="L4j-pd-Neh" secondAttribute="trailing" constant="20" id="16q-Wa-u00"/>
+                            <constraint firstItem="r0Q-fk-hji" firstAttribute="centerX" secondItem="1YJ-0L-4nU" secondAttribute="centerX" id="5nL-Nn-gVm"/>
                             <constraint firstItem="L4j-pd-Neh" firstAttribute="leading" secondItem="7c3-wP-ZVM" secondAttribute="leading" constant="20" id="Btc-1s-qg7"/>
+                            <constraint firstItem="7c3-wP-ZVM" firstAttribute="bottom" secondItem="r0Q-fk-hji" secondAttribute="bottom" constant="100" id="IPw-eU-s3e"/>
                             <constraint firstItem="L4j-pd-Neh" firstAttribute="centerY" secondItem="1YJ-0L-4nU" secondAttribute="centerY" id="y90-98-rly"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7c3-wP-ZVM"/>
                     </view>
                     <navigationItem key="navigationItem" id="FZZ-cS-M5A"/>
                     <connections>
+                        <outlet property="doneButton" destination="r0Q-fk-hji" id="yNH-le-WRT"/>
                         <outlet property="successDescriptionLabel" destination="Lnp-3o-eYo" id="pE9-SQ-Wvl"/>
                         <outlet property="successTitleLabel" destination="ru8-yM-54f" id="Utm-Nl-nwD"/>
                     </connections>

@@ -44,6 +44,7 @@ enum Constants {
             case start = "LET'S START"
             case wifiSetUp = "CONTINUE"
             case scanForWifiNetworks = "SCAN FOR WiFi NETWORKS"
+            case done = "DONE"
         }
         
         enum Label: String {
