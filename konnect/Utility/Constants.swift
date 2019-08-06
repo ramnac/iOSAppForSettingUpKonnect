@@ -47,9 +47,9 @@ enum Constants {
         }
         
         enum Label: String {
-            case networkSetUp = "Connect a Andersen chargepoint to the Konnect Cloud service"
+            case networkSetUp = "Connect an Andersen chargepoint to the Konnect Cloud service"
             case wifiSetUpTitle = "Enter Setup Mode"
-            case wifiSetUpDescription = "Press multi function setup button for 5 secs until status LED shows solid amber"
+            case wifiSetUpDescription = "Press multi function setup button for 10 seconds until the front lights show solid amber"
             case wifiConnectionSuccessTitle = "Connection Success"
             case wifiConnectionSuccessDescription = "The Andersen chargepoint unit is now connected to the local WiFi network"
         }
