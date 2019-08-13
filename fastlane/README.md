@@ -26,6 +26,11 @@ Push a new beta build to TestFlight
 fastlane ios addDevice
 ```
 
+### ios frameScreenshots
+```
+fastlane ios frameScreenshots
+```
+
 ### ios generateDevCertAndDevProfile
 ```
 fastlane ios generateDevCertAndDevProfile

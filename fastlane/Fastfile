@@ -83,6 +83,18 @@ platform :ios do
     ) 
   end
 
+  lane :frameScreenshots do |options|
+    frameit(path:"./fastlane/screenshots/")
+
+    Dir.glob("./screenshots/*framed.png") {|file|
+      originalFileName = file.sub('_framed','')
+      imageHeight=`sips -g pixelHeight "#{originalFileName}" | grep 'pixelHeight' | cut -d: -f2`
+      imageWidth=`sips -g pixelWidth "#{originalFileName}" | grep 'pixelWidth' | cut -d: -f2`
+      #requires imagemagick
+      sh("convert","-resize","#{imageWidth}x#{imageHeight}","#{file}","-background","white","-gravity","center","-extent","#{imageWidth}x#{imageHeight}","#{file}")
+    }
+  end
+
   lane :generateDevCertAndDevProfile do
     checkCertsAndProfiles(
       type:"development",
