@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2147083023351895003A49A6 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2147082F23351895003A49A6 /* CustomError.swift */; };
 		21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */; };
 		21CF861722E2C48700A2A9E7 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861622E2C48700A2A9E7 /* AlertDelegate.swift */; };
 		21CF861922E2CB4600A2A9E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF861822E2CB4600A2A9E7 /* Constants.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2147082F23351895003A49A6 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		21CF861622E2C48700A2A9E7 /* AlertDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
 		21CF861822E2CB4600A2A9E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				21CF860C22E2A7B600A2A9E7 /* Bluetooth.swift */,
+				2147082F23351895003A49A6 /* CustomError.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				21DB856C22E202CF007EAFBD /* WiFiSetUpViewController.swift in Sources */,
 				21E4C4C222F51FFE00334B18 /* ConnectNetworkViewController.swift in Sources */,
 				21CF862222E3326000A2A9E7 /* ConnectedDevicesViewController.swift in Sources */,
+				2147083023351895003A49A6 /* CustomError.swift in Sources */,
 				21CF860D22E2A7B600A2A9E7 /* Bluetooth.swift in Sources */,
 				21E4C4CA22F520AD00334B18 /* AvailableNetworksTableViewController.swift in Sources */,
 				21E4C4C422F5202300334B18 /* WiFiConnectionSuccessViewController.swift in Sources */,

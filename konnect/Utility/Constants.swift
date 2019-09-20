@@ -81,5 +81,11 @@ enum Constants {
             case rssiMinimumStrength = -90
             case scanTimeoutInSeconds = 60
         }
+        
+        enum Error: String {
+            case discoverServicesError = "No Service been discovered on the Peripheral or discovered Service is not matching the expected UUID"
+            case discoverCharacteristicsForServiceError = "Discovered Service is not matching the expected UUID or No Characteristic been discovered or discovered Characteristic not matching expected UUID"
+            case updateValueForCharacteristicError = "No Characteristic value from the peripheral or No response / Invalid response for the Wifi search request or No response / Invalid response for the Wifi Password update request"
+        }
     }
 }

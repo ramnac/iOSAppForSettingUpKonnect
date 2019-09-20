@@ -219,7 +219,7 @@ extension Bluetooth: CBPeripheralDelegate {
                 }
             }
         }
-        delegate?.didFailToDiscoverPeripheralServices(error: error)
+        delegate?.didFailToDiscoverPeripheralServices(error: CustomError.discoverServicesError)
         resetBluetooth()
     }
     
@@ -267,7 +267,7 @@ extension Bluetooth: CBPeripheralDelegate {
                 //No need to handle this as this will never happen
             }
         } else {
-            delegate?.didFailToDiscoverCharacteristics(error: error)
+            delegate?.didFailToDiscoverCharacteristics(error: CustomError.discoverCharacteristicsForServiceError)
             resetBluetooth()
         }
     }
@@ -311,7 +311,7 @@ extension Bluetooth: CBPeripheralDelegate {
                 //No need to handle this as this will never happen
             }
         }
-        delegate?.didFailToUpdateValueForCharacteristic(error: error)
+        delegate?.didFailToUpdateValueForCharacteristic(error: CustomError.updateValueForCharacteristicError)
         resetBluetooth()
     }
     
