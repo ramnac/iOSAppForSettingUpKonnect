@@ -15,7 +15,11 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var scanForWifiNetworksButton: UIButton!
     
+    @IBOutlet weak var countDownTimerLabel: UILabel!
     fileprivate var wifiNetworks: [String]?
+    
+    fileprivate var timer: Timer?
+    private var timeLeft: Int = Constants.UserInterface.Numbers.countDownTimerTotalSecondsLeft.rawValue
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +33,7 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     private func customiseUserInterface() {
         navigationItem.title = Constants.UserInterface.NavigationTitle.connectedDevices.rawValue
         navigationItem.hidesBackButton = true
+        countDownTimerLabel.textColor = UIColor.red
     }
     
     private func startPeripheralScan() {
@@ -46,6 +51,7 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
     @objc private func resetBluetoothAndUserInterfaceState() {
         doResetStatusLabelAndHideLoadingIndicator()
         clearBluetoothDelegate()
+        invalidateTimerAndResetCountDownTimerLabel()
     }
     
     private func doResetStatusLabelAndHideLoadingIndicator() {
@@ -85,6 +91,25 @@ class ConnectedDevicesViewController: UIViewController, LoadingIndicatorDelegate
         }
     }
     
+    @objc fileprivate func onTimerFires() {
+        timeLeft -= 1
+        if timeLeft > 1 {
+            countDownTimerLabel.text = String(format: Constants.UserInterface.Label.countDownTimerPluralForm.rawValue, timeLeft)
+        } else {
+            countDownTimerLabel.text = String(format: Constants.UserInterface.Label.countDownTimerSingularForm.rawValue, timeLeft)
+        }
+        
+        if timeLeft <= 0 {
+            invalidateTimerAndResetCountDownTimerLabel()
+            showScanForWifiNetworksButton()
+        }
+    }
+    
+    private func invalidateTimerAndResetCountDownTimerLabel() {
+        timer?.invalidate()
+        timer = nil
+        countDownTimerLabel.text = ""
+    }
     
     /*
     // MARK: - Navigation
@@ -120,7 +145,8 @@ extension ConnectedDevicesViewController: BluetoothDelegate {
         statusLabel.text = String(format: Constants.UserInterface.connected.rawValue, deviceName)
         hideLoadingIndicator()
         clearBluetoothDelegate()
-        showScanForWifiNetworksButton()
+        countDownTimerLabel.text = String(format: Constants.UserInterface.Label.countDownTimerPluralForm.rawValue, timeLeft)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
     }
     
     func didConnectedToInvalidPeripheral() {

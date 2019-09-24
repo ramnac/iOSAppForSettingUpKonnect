@@ -120,6 +120,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7JM-zG-dmQ">
+                                <rect key="frame" x="207" y="712" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb4-19-oRy">
                                 <rect key="frame" x="192" y="732" width="30" height="30"/>
                                 <connections>
@@ -133,10 +139,13 @@
                             <constraint firstItem="zb4-19-oRy" firstAttribute="centerX" secondItem="EQ8-zJ-bhF" secondAttribute="centerX" id="Br0-6k-e7L"/>
                             <constraint firstItem="hU2-Xn-ZWe" firstAttribute="bottom" secondItem="zb4-19-oRy" secondAttribute="bottom" constant="100" id="Jby-9z-wqt"/>
                             <constraint firstItem="chP-6z-DkZ" firstAttribute="top" secondItem="hU2-Xn-ZWe" secondAttribute="top" constant="100" id="L1g-Ha-7LN"/>
+                            <constraint firstItem="7JM-zG-dmQ" firstAttribute="centerX" secondItem="EQ8-zJ-bhF" secondAttribute="centerX" id="TeU-C9-rb7"/>
+                            <constraint firstItem="zb4-19-oRy" firstAttribute="bottom" secondItem="7JM-zG-dmQ" secondAttribute="bottom" constant="50" id="ioo-xo-XX1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hU2-Xn-ZWe"/>
                     </view>
                     <connections>
+                        <outlet property="countDownTimerLabel" destination="7JM-zG-dmQ" id="FUZ-Cr-cY6"/>
                         <outlet property="scanForWifiNetworksButton" destination="zb4-19-oRy" id="rKE-zF-CpR"/>
                         <outlet property="statusLabel" destination="chP-6z-DkZ" id="hkH-SX-B4p"/>
                         <segue destination="0FS-JV-nTX" kind="show" identifier="availableNetworksTableViewController" id="Op3-2W-dd0"/>

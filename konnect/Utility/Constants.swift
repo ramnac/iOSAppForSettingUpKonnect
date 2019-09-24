@@ -53,6 +53,12 @@ enum Constants {
             case wifiSetUpDescription = "Press multi function setup button for 10 seconds until the front lights show solid amber"
             case wifiConnectionSuccessTitle = "Connection Success"
             case wifiConnectionSuccessDescription = "The Andersen chargepoint unit is now connected to the local WiFi network"
+            case countDownTimerPluralForm = "Please wait %d seconds"
+            case countDownTimerSingularForm = "Please wait %d second"
+        }
+        
+        enum Numbers: Int {
+            case countDownTimerTotalSecondsLeft = 3
         }
     }
     
